@@ -67,6 +67,12 @@
   will-change: transform, opacity;
 }
 
+/* Journey connector line: drawn in (scaleX) by the journey timeline. */
+.motion-ready [data-journey-line] {
+  transform: scaleX(0);
+  will-change: transform;
+}
+
 /* Magnetic + custom-cursor helpers are transform-only. */
 [data-magnetic] { will-change: transform; }
 
@@ -79,6 +85,7 @@
   .motion-ready [data-reveal],
   .motion-ready [data-reveal].is-inview,
   .motion-ready [data-hero-in],
+  .motion-ready [data-journey-line],
   .motion-ready .split-word {
     opacity: 1 !important;
     transform: none !important;

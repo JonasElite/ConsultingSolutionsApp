@@ -7,7 +7,7 @@ import body from '../fragments/home.html?raw';
 </BaseLayout>
 
 <script>
-  import { gsap, splitWords, magnetic, reducedMotion } from '../scripts/motion';
+  import { gsap, splitWords, magnetic, revealOnScroll, reducedMotion } from '../scripts/motion';
   import { initNeural } from '../scripts/neural';
 
   function initHero() {
@@ -39,5 +39,38 @@ import body from '../fragments/home.html?raw';
       .to(hero.querySelector('.hero-stats'), { autoAlpha: 1, y: 0 }, '-=0.5');
   }
 
-  document.addEventListener('astro:page-load', initHero);
+  function initJourney() {
+    const section = document.querySelector<HTMLElement>('.journey');
+    const track = section?.querySelector<HTMLElement>('.journey-track');
+    if (!section || !track || section.dataset.anim) return;
+    section.dataset.anim = '1';
+
+    const line = track.querySelector<HTMLElement>('[data-journey-line]');
+    const steps = Array.from(track.querySelectorAll<HTMLElement>('.journey-step'));
+
+    if (reducedMotion) {
+      revealOnScroll(section); // header; steps already visible (no motion-ready)
+      return;
+    }
+
+    // Reserve steps so any later document-wide reveal skips them.
+    steps.forEach((s) => (s.dataset.mDone = '1'));
+    revealOnScroll(section); // fades in the section header
+
+    gsap
+      .timeline({ scrollTrigger: { trigger: track, start: 'top 78%', once: true } })
+      .to(line, { scaleX: 1, duration: 0.6, ease: 'power2.out' })
+      .to(
+        steps,
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.12 },
+        '-=0.3',
+      );
+  }
+
+  function initHome() {
+    initHero();
+    initJourney();
+  }
+
+  document.addEventListener('astro:page-load', initHome);
 </script>

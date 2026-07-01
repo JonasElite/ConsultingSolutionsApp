@@ -266,8 +266,7 @@ body {
   position: relative;
   margin-top: var(--space-8);
 }
-.journey-track::before {
-  content: '';
+.journey-line {
   position: absolute;
   top: 22px;
   left: 8%;
@@ -276,6 +275,7 @@ body {
   background: linear-gradient(90deg, var(--color-primary), var(--cyan), var(--violet));
   opacity: 0.5;
   z-index: 0;
+  transform-origin: left center;
 }
 .journey-step {
   position: relative;
@@ -320,7 +320,7 @@ body {
 }
 @media (max-width: 720px) {
   .journey-track { grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-4); }
-  .journey-track::before { display: none; }
+  .journey-line { display: none; }
 }
 
 /* ---------- Module page: breadcrumb, progress chip, pager ---------- */
