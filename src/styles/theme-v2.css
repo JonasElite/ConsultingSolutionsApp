@@ -410,6 +410,27 @@ body {
 }
 .bundle-banner .bundle-inner { position: relative; z-index: 1; }
 
+/* ---------- CTA: slow gradient motion ---------- */
+.cta-glow {
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(30rem 30rem at 30% 40%, color-mix(in srgb, var(--cyan) 24%, transparent), transparent 60%),
+    radial-gradient(26rem 26rem at 70% 60%, color-mix(in srgb, var(--violet) 20%, transparent), transparent 60%);
+  animation: ctaDrift 22s var(--ease-inout) infinite alternate;
+  will-change: transform;
+}
+.cta-section .container { position: relative; z-index: 1; }
+@keyframes ctaDrift {
+  0%   { transform: translate3d(-4%, -3%, 0) scale(1); }
+  100% { transform: translate3d(4%, 3%, 0) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-glow { animation: none; }
+}
+
 /* ---------- Sidebar / together / cta as glass ---------- */
 .team-together,
 .cta-box {
