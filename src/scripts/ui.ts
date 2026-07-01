@@ -26,7 +26,9 @@ function initDataLinkRouter(): void {
 
   // Keyboard accessibility for non-anchor clickable elements.
   document.querySelectorAll<HTMLElement>('[data-link]').forEach((el) => {
-    if (el.matches('a, button')) return;
+    // Real buttons and anchors with href are already keyboard-accessible;
+    // everything else (spans, divs, href-less anchors) needs help.
+    if (el.matches('button, a[href]')) return;
     el.tabIndex = 0;
     el.setAttribute('role', 'link');
     el.addEventListener('keydown', (e) => {
@@ -108,14 +110,16 @@ function initNavScroll(): void {
   window.addEventListener('scroll', update, { passive: true });
 }
 
-/* --- Contact form (demo submit) --- */
+/* --- Contact form ---
+   Really submits: POSTs to `data-endpoint` (e.g. a Formspree/Web3Forms URL)
+   when configured; otherwise opens a pre-filled e-mail via `data-mailto`
+   so the message is never silently lost. */
 function initContactForm(): void {
   const form = document.querySelector<HTMLFormElement>('.contact-form');
   const success = document.getElementById('formSuccess');
   if (!form || !success) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const showSuccess = () => {
     form.style.transition = 'all 0.3s ease';
     form.style.opacity = '0';
     form.style.transform = 'translateY(-10px)';
@@ -124,6 +128,51 @@ function initContactForm(): void {
       success.style.display = 'block';
       success.style.animation = 'fadeInUp 0.5s ease both';
     }, 300);
+  };
+
+  const buildMailto = (data: FormData): string => {
+    const to = form.dataset.mailto || '';
+    const name = `${data.get('fname') ?? ''} ${data.get('lname') ?? ''}`.trim();
+    const subject = `KI-Beratung Anfrage: ${data.get('module') || 'Allgemein'}`;
+    const bodyLines = [
+      `Name: ${name}`,
+      `Unternehmen: ${data.get('company') ?? ''}`,
+      `E-Mail: ${data.get('email') ?? ''}`,
+      `Interessiertes Modul: ${data.get('module') ?? '—'}`,
+      '',
+      `${data.get('message') ?? ''}`,
+    ];
+    return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const endpoint = form.dataset.endpoint;
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet …';
+    }
+
+    if (endpoint) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) return showSuccess();
+      } catch {
+        /* fall through to mailto */
+      }
+    }
+
+    // No backend (or it failed): hand off to the user's mail client.
+    window.location.href = buildMailto(data);
+    showSuccess();
   });
 }
 
@@ -158,13 +207,96 @@ function initScrollReveal(): void {
   });
 }
 
+/* --- Scroll progress bar --- */
+function initScrollProgress(): void {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    bar.style.width = max > 0 ? `${(doc.scrollTop / max) * 100}%` : '0%';
+  };
+  update();
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+}
+
+/* --- Count-up on stat numbers when they first appear --- */
+function initCountUp(): void {
+  const nums = document.querySelectorAll<HTMLElement>('.stat-num');
+  if (!nums.length) return;
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animate = (el: HTMLElement) => {
+    const original = el.textContent ?? '';
+    const m = original.match(/^(\D*)(\d[\d.]*)(.*)$/s); // leading number (with dot separators)
+    if (!m || reduced) return;
+    const [, pre, digits, rest] = m;
+    const target = parseInt(digits.replace(/\./g, ''), 10);
+    if (!Number.isFinite(target)) return;
+    const dur = 1100;
+    const start = performance.now();
+    const fmt = (n: number) => n.toLocaleString('de-DE');
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = `${pre}${fmt(Math.round(target * eased))}${rest}`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if (!('IntersectionObserver' in window)) return;
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target as HTMLElement);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.6 },
+  );
+  nums.forEach((el) => obs.observe(el));
+}
+
+/* --- Mouse-follow spotlight on cards (sets --mx / --my) --- */
+function initCardSpotlight(): void {
+  if (matchMedia('(hover: none)').matches) return;
+  document.addEventListener(
+    'pointermove',
+    (e) => {
+      const card = (e.target as HTMLElement)?.closest<HTMLElement>('.module-card, .team-card');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+      card.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+    },
+    { passive: true },
+  );
+}
+
 function init(): void {
   initDataLinkRouter();
   initMobileNav();
   initThemeToggle();
   initNavScroll();
+  initScrollProgress();
   initContactForm();
   initScrollReveal();
+  initCountUp();
+  initCardSpotlight();
 }
 
 if (document.readyState === 'loading') {

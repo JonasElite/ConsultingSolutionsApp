@@ -9,28 +9,30 @@
     <div class="container contact-content">
       <div class="contact-grid">
         <div class="contact-form-wrap">
-          <form class="contact-form">
+          <!-- Really submits: set data-endpoint to a Formspree/Web3Forms URL to
+               collect messages server-side; without it, a pre-filled e-mail opens. -->
+          <form class="contact-form" data-mailto="jonas.beckmann@beratung.de">
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">Vorname *</label>
-                <input type="text" id="fname" placeholder="Max" required />
+                <input type="text" id="fname" name="fname" placeholder="Max" required />
               </div>
               <div class="form-group">
                 <label for="lname">Nachname *</label>
-                <input type="text" id="lname" placeholder="Mustermann" required />
+                <input type="text" id="lname" name="lname" placeholder="Mustermann" required />
               </div>
             </div>
             <div class="form-group">
               <label for="company">Unternehmen *</label>
-              <input type="text" id="company" placeholder="Muster GmbH" required />
+              <input type="text" id="company" name="company" placeholder="Muster GmbH" required />
             </div>
             <div class="form-group">
               <label for="email">E-Mail *</label>
-              <input type="email" id="email" placeholder="max@muster.de" required />
+              <input type="email" id="email" name="email" placeholder="max@muster.de" required />
             </div>
             <div class="form-group">
               <label for="module">Interessiertes Modul</label>
-              <select id="module">
+              <select id="module" name="module">
                 <option value="">Bitte auswählen</option>
                 <option value="m1">Modul 1 – KI-Mehrwert &amp; Use Cases</option>
                 <option value="m2">Modul 2 – KI-Kultur &amp; Awareness</option>
@@ -41,9 +43,10 @@
             </div>
             <div class="form-group">
               <label for="message">Ihre Nachricht</label>
-              <textarea id="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI..."></textarea>
+              <textarea id="message" name="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI..."></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full btn-lg">Nachricht senden</button>
+            <p class="form-note">Wir behandeln Ihre Angaben vertraulich und melden uns innerhalb von 24 Stunden.</p>
           </form>
           <div class="form-success" id="formSuccess" style="display:none">
             <div class="success-icon">✓</div>

@@ -2,6 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import '../styles/theme-v2.css';
 
 interface Props {
   title?: string;
@@ -56,6 +57,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     />
   </head>
   <body>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
     <Nav />
     <slot />
     <Footer />

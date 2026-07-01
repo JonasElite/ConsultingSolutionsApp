@@ -1,6 +1,10 @@
 <div class="module-hero" style="--module-color: var(--color-accent2)">
       <div class="container">
-        <button class="back-btn" data-link="/">← Zur Übersicht</button>
+        <nav class="crumbs" aria-label="Brotkrumen">
+          <a data-link="/">Übersicht</a>
+          <span class="sep">/</span>
+          <span class="current">Modul 2</span>
+        </nav>
         <div class="module-hero-content">
           <div class="module-num-large">02</div>
           <div>
@@ -10,6 +14,9 @@
             <div class="module-badges">
               <span class="badge badge-price">50.000 – 70.000 €</span>
               <span class="badge badge-time">6 – 8 Wochen</span>
+            </div>
+            <div class="module-progress" aria-label="Modul 2 von 4">
+              <span class="pip"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span>
             </div>
           </div>
         </div>
@@ -38,7 +45,7 @@
               <div class="deliverable-icon">📢</div>
               <div>
                 <h4>Kommunikationskonzept</h4>
-                <p>Entwicklung einer internen Kommunikationsstrategie zur Begleitung der KI-Transformation. Includes Change Story, Führungskräfte-Botschaften, FAQ-Dokument und regelmäßige Update-Formate.</p>
+                <p>Entwicklung einer internen Kommunikationsstrategie zur Begleitung der KI-Transformation. Umfasst Change Story, Führungskräfte-Botschaften, FAQ-Dokument und regelmäßige Update-Formate.</p>
               </div>
             </div>
             <div class="deliverable-item">
@@ -94,7 +101,16 @@
             </ul>
           </div>
           <button class="btn btn-primary btn-full" data-link="/kontakt">Modul anfragen</button>
-          <button class="btn btn-outline btn-full" data-link="/modul-3">Weiter zu Modul 3 →</button>
         </div>
       </div>
+      <nav class="module-pager" aria-label="Modul-Navigation">
+        <a data-link="/modul-1">
+          <span class="pager-dir">← Zurück</span>
+          <span class="pager-title">Modul 1 · KI-Mehrwert &amp; Use Cases</span>
+        </a>
+        <a class="pager-next" data-link="/modul-3">
+          <span class="pager-dir">Weiter →</span>
+          <span class="pager-title">Modul 3 · KI-Governance</span>
+        </a>
+      </nav>
     </div>

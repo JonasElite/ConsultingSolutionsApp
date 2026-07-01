@@ -89,3 +89,15 @@ Der Text jeder Seite liegt in `src/fragments/<route>.html` und wird von der
 zugehörigen Seite in `src/pages/` eingebunden. Für strukturelle Änderungen die
 `.astro`-Komponenten anpassen; Farben, Abstände und Typografie werden zentral über
 die CSS-Variablen (Design-Tokens) am Anfang von `src/styles/global.css` gesteuert.
+Der futuristische „Neural Enterprise"-Look (Glas-Oberflächen, Cyan-Glow, Mono-Labels,
+Journey-Stepper) liegt in `src/styles/theme-v2.css` und wird nach `global.css` geladen.
+
+### Kontaktformular aktivieren
+
+Das Formular auf `/kontakt` funktioniert sofort: Ohne Backend öffnet es eine
+vorbereitete E-Mail an die in `data-mailto` hinterlegte Adresse
+(`src/fragments/kontakt.html`). Für serverseitigen Empfang einfach einen
+Formular-Dienst eintragen — z. B. [Formspree](https://formspree.io) oder
+[Web3Forms](https://web3forms.com) — indem am `<form>` das Attribut
+`data-endpoint="https://…"` ergänzt wird. Dann werden die Felder per `fetch`
+dorthin gesendet (Fallback auf die E-Mail-Variante bleibt erhalten).
