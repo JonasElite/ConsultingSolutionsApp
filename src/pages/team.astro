@@ -8,3 +8,8 @@ import body from '../fragments/team.html?raw';
 >
   <main set:html={body}></main>
 </BaseLayout>
+
+<script>
+  import { initContentPage } from '../scripts/content-motion';
+  document.addEventListener('astro:page-load', initContentPage);
+</script>
