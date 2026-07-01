@@ -146,10 +146,29 @@ Wir formalisieren das bestehende Token-System und ergänzen einen **Motion-Layer
 
 ---
 
-## 8. Offene Fragen an dich
+## 8. Getroffene Entscheidungen (Feedback-Runde 1)
 
-Diese Punkte ändern das Konzept spürbar – ich frage sie separat im Chat ab:
-1. **Tech-Richtung:** Bei Astro bleiben (empfohlen) oder bewusst React/Next?
-2. **Umfang:** ganze Website oder Startseite zuerst als „Showcase"?
-3. **Brand/CI:** Ist das KPMG-Blau echtes CI oder Platzhalter? Gibt es echtes Logo/Markenfarben/Hausschrift?
-4. **Ambitionslevel & Tonfall:** dezent-elegant (Linear/Stripe) ↔ spektakulär (Apple/igloo.inc inkl. 3D)?
+1. **Tech-Richtung:** ✅ **Bei Astro bleiben.** Lenis + GSAP/ScrollTrigger + native View Transitions.
+2. **Umfang:** ✅ **Startseite zuerst als Showcase.** Rest der Seiten danach separat.
+3. **Brand/CI:** ✅ **Aktuelle Richtung beibehalten** (Blau/Cyan + Space Grotesk), nur verfeinern. Kein verbindliches Logo/CI.
+4. **Ambition:** ✅ **Ausgewogen** – elegante, ruhige Basis mit **1–2 Signature-Momenten**.
+
+### Konkrete Signature-Momente (Vorschlag)
+- **Hero:** wortweises SplitText-Reveal + dezent animierter „Neural Signature"-Hintergrund (Canvas, GPU-schonend, `reduced-motion`-Fallback).
+- **Journey-Stepper:** die Verbindungslinie „zeichnet" sich beim Reinscrollen (SVG `stroke-dashoffset`), Dots poppen gestaffelt ein.
+
+Alles andere bleibt bewusst **zurückhaltend** (feine Stagger-Reveals, Hover-Micro-Interactions, Magnetic-CTA, Count-up).
+
+---
+
+## 9. Phase-2-Plan (Foundation) – wird nach deinem OK umgesetzt
+
+Ziel: das **Fundament + eine Demo-Route** zum Prüfen des Feelings – noch kein Umbau der echten Sections.
+
+1. **Fonts self-hosten:** Space Grotesk + JetBrains Mono als Variable Fonts lokal einbinden (`font-display: swap`, Preload), Google-Fonts-Links entfernen → schneller, DSGVO-freundlich, kein render-blocking.
+2. **Motion-Tokens:** `--dur-*`, `--ease-*`, `--stagger` als CSS-Variablen + ein globaler `prefers-reduced-motion`-Kill-Switch.
+3. **Animations-Basis:** `lenis` + `gsap`/`ScrollTrigger` installieren; ein sauberes TS-Modul (`src/scripts/motion.ts`) mit Lenis-Init, GSAP-Anbindung, `reduced-motion`- und Mobile-Guard. Kein `console.log`, strict TS.
+4. **Seitenübergänge:** Astro View Transitions (`ClientRouter`) im `BaseLayout`.
+5. **Demo-Route `/demo`:** zeigt Text-Reveal, Stagger, Parallax, Magnetic-Button, Count-up und einen Scroll-Pin-Prototyp – als Referenz für „Feeling", Performance (CLS 0, GPU) und `reduced-motion`.
+
+**Danach: Stop + dein OK**, bevor Phase 3 (echte Sections der Startseite) startet.
