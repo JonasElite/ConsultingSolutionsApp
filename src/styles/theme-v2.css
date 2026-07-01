@@ -187,6 +187,9 @@ body {
 .team-card:hover::after { opacity: 1; }
 .module-card:hover,
 .team-card:hover {
+  /* transform here (theme-v2 loads after global) so the reveal's
+     `.is-visible { transform: none }` doesn't cancel the hover lift. */
+  transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
   box-shadow: var(--glow-ring);
 }
@@ -392,6 +395,20 @@ body {
 }
 .module-pager .pager-title { font-family: var(--font-display); font-weight: 600; color: var(--color-text); }
 .module-pager .pager-next { text-align: right; align-items: flex-end; margin-left: auto; }
+
+/* ---------- Bundle banner parallax glow ---------- */
+.bundle-glow {
+  position: absolute;
+  top: -60%;
+  left: 8%;
+  width: 55%;
+  height: 220%;
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--cyan) 32%, transparent), transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+.bundle-banner .bundle-inner { position: relative; z-index: 1; }
 
 /* ---------- Sidebar / together / cta as glass ---------- */
 .team-together,

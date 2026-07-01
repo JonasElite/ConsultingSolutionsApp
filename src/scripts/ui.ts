@@ -242,7 +242,7 @@ let countObserver: IntersectionObserver | null = null;
 
 function initScrollReveal(): void {
   const items = document.querySelectorAll<HTMLElement>(
-    '.module-card, .deliverable-item, .team-card, .process-step, .sidebar-card, .format-card, .compliance-card, .op-layer',
+    '.module-card, .bundle-banner, .deliverable-item, .team-card, .process-step, .sidebar-card, .format-card, .compliance-card, .op-layer',
   );
   if (!items.length) return;
 
