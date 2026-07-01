@@ -58,6 +58,28 @@ body {
   scrollbar-color: color-mix(in srgb, var(--cyan) 45%, transparent) transparent;
 }
 
+/* ---------- Skip link (accessibility) ---------- */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 300;
+  transform: translateY(-160%);
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 150ms var(--ease-out, ease-out);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--cyan, #38e0ff);
+  outline-offset: 2px;
+}
+
 /* ---------- Scroll progress bar ---------- */
 .scroll-progress {
   position: fixed;

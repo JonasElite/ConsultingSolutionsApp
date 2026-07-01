@@ -67,8 +67,11 @@ import body from '../fragments/home.html?raw';
   function initNetwork() {
     const svg = document.querySelector<SVGSVGElement>('.network-svg');
     if (!svg || svg.dataset.anim) return;
-    svg.dataset.anim = '1';
     if (reducedMotion) return; // drawn statically as authored
+    // Skip when the SVG isn't rendered (e.g. hidden on mobile) — getTotalLength
+    // throws on non-rendered elements.
+    if (!svg.getBoundingClientRect().width) return;
+    svg.dataset.anim = '1';
 
     const lines = Array.from(svg.querySelectorAll<SVGLineElement>('line'));
     const circles = Array.from(svg.querySelectorAll<SVGCircleElement>('circle'));

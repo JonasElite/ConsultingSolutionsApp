@@ -325,6 +325,12 @@ function bootOnce(): void {
 }
 
 function onPage(): void {
+  // Skip-link / landmark target (works across view-transition swaps).
+  const main = document.querySelector('main');
+  if (main && !main.id) {
+    main.id = 'main-content';
+    main.tabIndex = -1;
+  }
   applyTheme();
   paintToggle();
   augmentDataLinkA11y();
