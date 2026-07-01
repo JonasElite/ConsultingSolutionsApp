@@ -1,9 +1,17 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   // A fully static, pre-rendered site — deployable to any static host or CDN.
   output: 'static',
+
+  // Sitemap generated from `site`; the /demo playground is excluded.
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/demo'),
+    }),
+  ],
 
   // `site` is used for canonical URLs and sitemap generation.
   // Override at build time with e.g. `SITE_URL=https://example.com npm run build`.

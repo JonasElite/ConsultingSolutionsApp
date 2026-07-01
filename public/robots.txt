@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /demo
+
+Sitemap: https://ki-beratung.example.com/sitemap-index.xml

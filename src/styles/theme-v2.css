@@ -58,6 +58,28 @@ body {
   scrollbar-color: color-mix(in srgb, var(--cyan) 45%, transparent) transparent;
 }
 
+/* ---------- Skip link (accessibility) ---------- */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 300;
+  transform: translateY(-160%);
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 150ms var(--ease-out, ease-out);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--cyan, #38e0ff);
+  outline-offset: 2px;
+}
+
 /* ---------- Scroll progress bar ---------- */
 .scroll-progress {
   position: fixed;
@@ -187,6 +209,9 @@ body {
 .team-card:hover::after { opacity: 1; }
 .module-card:hover,
 .team-card:hover {
+  /* transform here (theme-v2 loads after global) so the reveal's
+     `.is-visible { transform: none }` doesn't cancel the hover lift. */
+  transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
   box-shadow: var(--glow-ring);
 }
@@ -224,6 +249,20 @@ body {
   filter: drop-shadow(0 0 14px color-mix(in srgb, var(--cyan) 40%, transparent));
 }
 
+/* ---------- Hero: neural signature canvas + line layout ---------- */
+.hero-neural {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.hero-title .hero-line,
+.hero-title .hero-title-accent {
+  display: block;
+}
+
 /* ---------- Hero: richer aurora, tighter type ---------- */
 .hero-orb-1 { background: radial-gradient(circle, var(--cyan) 0%, transparent 70%); opacity: 0.4; }
 .hero-title { font-weight: 600; letter-spacing: -0.035em; }
@@ -252,8 +291,7 @@ body {
   position: relative;
   margin-top: var(--space-8);
 }
-.journey-track::before {
-  content: '';
+.journey-line {
   position: absolute;
   top: 22px;
   left: 8%;
@@ -262,6 +300,7 @@ body {
   background: linear-gradient(90deg, var(--color-primary), var(--cyan), var(--violet));
   opacity: 0.5;
   z-index: 0;
+  transform-origin: left center;
 }
 .journey-step {
   position: relative;
@@ -306,7 +345,7 @@ body {
 }
 @media (max-width: 720px) {
   .journey-track { grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-4); }
-  .journey-track::before { display: none; }
+  .journey-line { display: none; }
 }
 
 /* ---------- Module page: breadcrumb, progress chip, pager ---------- */
@@ -378,6 +417,41 @@ body {
 }
 .module-pager .pager-title { font-family: var(--font-display); font-weight: 600; color: var(--color-text); }
 .module-pager .pager-next { text-align: right; align-items: flex-end; margin-left: auto; }
+
+/* ---------- Bundle banner parallax glow ---------- */
+.bundle-glow {
+  position: absolute;
+  top: -60%;
+  left: 8%;
+  width: 55%;
+  height: 220%;
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--cyan) 32%, transparent), transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+.bundle-banner .bundle-inner { position: relative; z-index: 1; }
+
+/* ---------- CTA: slow gradient motion ---------- */
+.cta-glow {
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(30rem 30rem at 30% 40%, color-mix(in srgb, var(--cyan) 24%, transparent), transparent 60%),
+    radial-gradient(26rem 26rem at 70% 60%, color-mix(in srgb, var(--violet) 20%, transparent), transparent 60%);
+  animation: ctaDrift 22s var(--ease-inout) infinite alternate;
+  will-change: transform;
+}
+.cta-section .container { position: relative; z-index: 1; }
+@keyframes ctaDrift {
+  0%   { transform: translate3d(-4%, -3%, 0) scale(1); }
+  100% { transform: translate3d(4%, 3%, 0) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-glow { animation: none; }
+}
 
 /* ---------- Sidebar / together / cta as glass ---------- */
 .team-together,

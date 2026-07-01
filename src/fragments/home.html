@@ -1,20 +1,19 @@
 <!-- Hero -->
     <section class="hero">
       <div class="hero-bg">
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
+        <canvas class="hero-neural" data-neural aria-hidden="true"></canvas>
         <div class="hero-grid"></div>
       </div>
       <div class="container">
         <div class="hero-content">
-          <div class="hero-badge">KI-Transformation im Mittelstand</div>
-          <h1 class="hero-title">Von der KI-Idee<br/><span class="hero-title-accent">zur gelebten Praxis</span></h1>
-          <p class="hero-sub">Wir begleiten mittelständische Unternehmen auf dem Weg zur KI-fit Organisation — von der Potenzialanalyse über Governance bis zur nachhaltigen Verankerung.</p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" data-link="/modul-1">Portfolio erkunden</button>
-            <button class="btn btn-ghost" data-link="/team">Unser Team</button>
+          <div class="hero-badge" data-hero-in>KI-Transformation im Mittelstand</div>
+          <h1 class="hero-title"><span class="hero-line" data-split>Von der KI-Idee</span><span class="hero-title-accent" data-hero-in>zur gelebten Praxis</span></h1>
+          <p class="hero-sub" data-hero-in>Wir begleiten mittelständische Unternehmen auf dem Weg zur KI-fit Organisation — von der Potenzialanalyse über Governance bis zur nachhaltigen Verankerung.</p>
+          <div class="hero-actions" data-hero-in>
+            <button class="btn btn-primary" data-link="/modul-1" data-magnetic="0.3">Portfolio erkunden</button>
+            <button class="btn btn-ghost" data-link="/team" data-magnetic="0.25">Unser Team</button>
           </div>
-          <div class="hero-stats">
+          <div class="hero-stats" data-hero-in>
             <div class="stat">
               <span class="stat-num">4</span>
               <span class="stat-label">Beratungsmodule</span>
@@ -38,27 +37,28 @@
     <section class="section journey">
       <div class="container">
         <div class="section-header">
-          <p class="section-eyebrow">Der Transformationspfad</p>
-          <h2 class="section-title">In vier Phasen zur KI-fähigen Organisation</h2>
-          <p class="section-sub">Die Module bauen aufeinander auf — von der ersten Potenzialanalyse bis zur dauerhaften Verankerung. Jedes ist einzeln buchbar, als durchgängige Journey am wirksamsten.</p>
+          <p class="section-eyebrow" data-reveal="up">Der Transformationspfad</p>
+          <h2 class="section-title" data-reveal="up">In vier Phasen zur KI-fähigen Organisation</h2>
+          <p class="section-sub" data-reveal="up">Die Module bauen aufeinander auf — von der ersten Potenzialanalyse bis zur dauerhaften Verankerung. Jedes ist einzeln buchbar, als durchgängige Journey am wirksamsten.</p>
         </div>
         <div class="journey-track">
-          <div class="journey-step" data-link="/modul-1">
+          <span class="journey-line" data-journey-line aria-hidden="true"></span>
+          <div class="journey-step" data-link="/modul-1" data-reveal="up">
             <div class="journey-dot">01</div>
             <span class="journey-phase">Analyse</span>
             <span class="journey-label">KI-Mehrwert &amp; Use Cases</span>
           </div>
-          <div class="journey-step" data-link="/modul-2">
+          <div class="journey-step" data-link="/modul-2" data-reveal="up">
             <div class="journey-dot">02</div>
             <span class="journey-phase">Befähigung</span>
             <span class="journey-label">KI-Kultur &amp; Awareness</span>
           </div>
-          <div class="journey-step" data-link="/modul-3">
+          <div class="journey-step" data-link="/modul-3" data-reveal="up">
             <div class="journey-dot">03</div>
             <span class="journey-phase">Absicherung</span>
             <span class="journey-label">KI-Governance</span>
           </div>
-          <div class="journey-step" data-link="/modul-4">
+          <div class="journey-step" data-link="/modul-4" data-reveal="up">
             <div class="journey-dot">04</div>
             <span class="journey-phase">Verstetigung</span>
             <span class="journey-label">Organisationsmodell</span>
@@ -71,9 +71,9 @@
     <section class="section modules-overview">
       <div class="container">
         <div class="section-header">
-          <p class="section-eyebrow">Unser Angebot</p>
-          <h2 class="section-title">Die 4 Module im Überblick</h2>
-          <p class="section-sub">Jedes Modul kann einzeln oder als Teil der Full Journey gebucht werden. Gemeinsam decken sie den gesamten KI-Transformationspfad ab.</p>
+          <p class="section-eyebrow" data-reveal="up">Unser Angebot</p>
+          <h2 class="section-title" data-reveal="up">Die 4 Module im Überblick</h2>
+          <p class="section-sub" data-reveal="up">Jedes Modul kann einzeln oder als Teil der Full Journey gebucht werden. Gemeinsam decken sie den gesamten KI-Transformationspfad ab.</p>
         </div>
         <div class="modules-grid">
           <!-- M1 -->
@@ -159,6 +159,7 @@
 
         <!-- Bundle Banner -->
         <div class="bundle-banner" data-link="/kontakt">
+          <span class="bundle-glow" data-parallax="0.2" aria-hidden="true"></span>
           <div class="bundle-inner">
             <div class="bundle-label">Full Journey Bundle</div>
             <div class="bundle-title">Modul 1–4 kombiniert: Mittelstand 250 – 450 T€</div>
@@ -174,17 +175,17 @@
       <div class="container">
         <div class="why-grid">
           <div class="why-text">
-            <p class="section-eyebrow">Unser Ansatz</p>
-            <h2 class="section-title">Technologie, Menschen und Organisation — zusammen gedacht</h2>
-            <p class="section-body">Die meisten KI-Initiativen scheitern nicht an der Technik, sondern an fehlender Akzeptanz und unklaren Strukturen. Wir verbinden methodische Strenge mit echtem Verständnis für Ihren Mittelstand — und begleiten Sie von der ersten Idee bis zur messbaren Wirkung im Regelbetrieb.</p>
+            <p class="section-eyebrow" data-reveal="up">Unser Ansatz</p>
+            <h2 class="section-title" data-reveal-text>Technologie, Menschen und Organisation — zusammen gedacht</h2>
+            <p class="section-body" data-reveal="up">Die meisten KI-Initiativen scheitern nicht an der Technik, sondern an fehlender Akzeptanz und unklaren Strukturen. Wir verbinden methodische Strenge mit echtem Verständnis für Ihren Mittelstand — und begleiten Sie von der ersten Idee bis zur messbaren Wirkung im Regelbetrieb.</p>
             <ul class="why-list">
-              <li><span class="why-check">✓</span> Datenbasierte Prozesstransparenz als Ausgangspunkt</li>
-              <li><span class="why-check">✓</span> Technologieoffen – SAP, Microsoft, Google kompatibel</li>
-              <li><span class="why-check">✓</span> EU AI Act-konforme Governance von Beginn an</li>
-              <li><span class="why-check">✓</span> Wirksamkeit messbar durch klare KPIs</li>
-              <li><span class="why-check">✓</span> Skalierbare Methoden-Sets für Ihren Mittelstand</li>
+              <li data-reveal="left"><span class="why-check">✓</span> Datenbasierte Prozesstransparenz als Ausgangspunkt</li>
+              <li data-reveal="left"><span class="why-check">✓</span> Technologieoffen – SAP, Microsoft, Google kompatibel</li>
+              <li data-reveal="left"><span class="why-check">✓</span> EU AI Act-konforme Governance von Beginn an</li>
+              <li data-reveal="left"><span class="why-check">✓</span> Wirksamkeit messbar durch klare KPIs</li>
+              <li data-reveal="left"><span class="why-check">✓</span> Skalierbare Methoden-Sets für Ihren Mittelstand</li>
             </ul>
-            <button class="btn btn-primary" data-link="/team">Unser Team kennenlernen</button>
+            <button class="btn btn-primary" data-link="/team" data-reveal="up" data-magnetic="0.25">Unser Team kennenlernen</button>
           </div>
           <div class="why-visual">
             <div class="why-network">
@@ -235,11 +236,12 @@
 
     <!-- CTA -->
     <section class="section cta-section">
+      <span class="cta-glow" aria-hidden="true"></span>
       <div class="container">
         <div class="cta-box">
-          <h2>Bereit für Ihre KI-Transformation?</h2>
-          <p>Starten Sie mit einem unverbindlichen Erstgespräch und erfahren Sie, welches Modul für Ihr Unternehmen den größten Mehrwert bietet.</p>
-          <button class="btn btn-primary btn-lg" data-link="/kontakt">Jetzt Gespräch vereinbaren</button>
+          <h2 data-reveal="up">Bereit für Ihre KI-Transformation?</h2>
+          <p data-reveal="up">Starten Sie mit einem unverbindlichen Erstgespräch und erfahren Sie, welches Modul für Ihr Unternehmen den größten Mehrwert bietet.</p>
+          <button class="btn btn-primary btn-lg" data-link="/kontakt" data-reveal="up" data-magnetic="0.3">Jetzt Gespräch vereinbaren</button>
         </div>
       </div>
     </section>

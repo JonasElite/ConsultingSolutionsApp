@@ -5,3 +5,108 @@ import body from '../fragments/home.html?raw';
 <BaseLayout>
   <main set:html={body}></main>
 </BaseLayout>
+
+<script>
+  import { gsap, splitWords, revealText, magnetic, revealOnScroll, parallax, connectLenis, refreshTriggers, reducedMotion } from '../scripts/motion';
+  import { getLenis } from '../scripts/smoothscroll';
+  import { initNeural } from '../scripts/neural';
+
+  let lenisConnected = false;
+
+  function initHero() {
+    const hero = document.querySelector<HTMLElement>('.hero');
+    if (!hero || hero.dataset.anim) return;
+    hero.dataset.anim = '1';
+
+    const canvas = hero.querySelector<HTMLCanvasElement>('canvas[data-neural]');
+    if (canvas) initNeural(canvas);
+
+    const line = hero.querySelector<HTMLElement>('.hero-line[data-split]');
+    const words = line ? splitWords(line) : [];
+    const rest = Array.from(
+      hero.querySelectorAll<HTMLElement>('[data-hero-in]'),
+    );
+    magnetic(hero);
+
+    if (reducedMotion) {
+      gsap.set([...words, ...rest], { opacity: 1, y: 0 });
+      return;
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
+    tl.to(hero.querySelector('.hero-badge'), { autoAlpha: 1, y: 0 })
+      .to(words, { autoAlpha: 1, y: 0, stagger: 0.05 }, '-=0.4')
+      .to(hero.querySelector('.hero-title-accent'), { autoAlpha: 1, y: 0 }, '-=0.5')
+      .to(hero.querySelector('.hero-sub'), { autoAlpha: 1, y: 0 }, '-=0.45')
+      .to(hero.querySelector('.hero-actions'), { autoAlpha: 1, y: 0 }, '-=0.5')
+      .to(hero.querySelector('.hero-stats'), { autoAlpha: 1, y: 0 }, '-=0.5');
+  }
+
+  function initJourney() {
+    const section = document.querySelector<HTMLElement>('.journey');
+    const track = section?.querySelector<HTMLElement>('.journey-track');
+    if (!section || !track || section.dataset.anim) return;
+    section.dataset.anim = '1';
+
+    const line = track.querySelector<HTMLElement>('[data-journey-line]');
+    const steps = Array.from(track.querySelectorAll<HTMLElement>('.journey-step'));
+
+    // Steps are visible via CSS when motion isn't ready (reduced-motion).
+    if (reducedMotion) return;
+
+    // Reserve steps so the page-wide reveal skips them (timeline drives them).
+    steps.forEach((s) => (s.dataset.mDone = '1'));
+
+    gsap
+      .timeline({ scrollTrigger: { trigger: track, start: 'top 78%', once: true } })
+      .to(line, { scaleX: 1, duration: 0.6, ease: 'power2.out' })
+      .to(
+        steps,
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.12 },
+        '-=0.3',
+      );
+  }
+
+  function initNetwork() {
+    const svg = document.querySelector<SVGSVGElement>('.network-svg');
+    if (!svg || svg.dataset.anim) return;
+    if (reducedMotion) return; // drawn statically as authored
+    // Skip when the SVG isn't rendered (e.g. hidden on mobile) — getTotalLength
+    // throws on non-rendered elements.
+    if (!svg.getBoundingClientRect().width) return;
+    svg.dataset.anim = '1';
+
+    const lines = Array.from(svg.querySelectorAll<SVGLineElement>('line'));
+    const circles = Array.from(svg.querySelectorAll<SVGCircleElement>('circle'));
+    const texts = Array.from(svg.querySelectorAll<SVGTextElement>('text'));
+
+    // Prepare each connector for a stroke "draw".
+    lines.forEach((l) => {
+      const len = l.getTotalLength();
+      gsap.set(l, { strokeDasharray: len, strokeDashoffset: len });
+    });
+
+    gsap
+      .timeline({ scrollTrigger: { trigger: svg, start: 'top 80%', once: true } })
+      .from(circles, { scale: 0, transformOrigin: 'center', duration: 0.5, ease: 'back.out(2)', stagger: 0.03 })
+      .to(lines, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out', stagger: 0.02 }, '-=0.25')
+      .from(texts, { autoAlpha: 0, y: 4, duration: 0.4, stagger: 0.04 }, '-=0.4');
+  }
+
+  function initHome() {
+    if (!lenisConnected) {
+      connectLenis(getLenis()); // forward Lenis scroll to ScrollTrigger (once)
+      lenisConnected = true;
+    }
+    initHero();
+    initJourney(); // reserves journey steps before the page-wide reveal runs
+    document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
+    revealOnScroll(document); // section headers, lists etc. (skips reserved elements)
+    magnetic(document); // magnetic buttons beyond the hero
+    parallax(document); // bundle-banner glow depth
+    initNetwork();
+    refreshTriggers(); // recalc after the DOM is in place (also after view swaps)
+  }
+
+  document.addEventListener('astro:page-load', initHome);
+</script>
