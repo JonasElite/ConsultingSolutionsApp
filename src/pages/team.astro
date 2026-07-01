@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/team.html?raw';
+---
+<BaseLayout
+  title="Team | KI-Beratung"
+  description="Zwei erfahrene Assistant Manager mit komplementären Expertisen für eine ganzheitliche KI-Transformation Ihres Unternehmens."
+>
+  <main set:html={body}></main>
+</BaseLayout>

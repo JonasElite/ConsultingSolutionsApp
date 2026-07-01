@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/modul-1.html?raw';
+---
+<BaseLayout
+  title="Modul 1 – KI-Mehrwert & Use Cases | KI-Beratung"
+  description="Rapid Value Assessment, Process Mining und priorisierte Business Cases – Identifikation der KI-Use-Cases mit dem größten Business-Impact."
+>
+  <main class="module-view" set:html={body}></main>
+</BaseLayout>

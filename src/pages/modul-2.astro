@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/modul-2.html?raw';
+---
+<BaseLayout
+  title="Modul 2 – KI-Kultur & Awareness | KI-Beratung"
+  description="Workshops, Sensibilisierung und Kommunikationskonzept – wir schaffen Mindset und Kompetenzen für eine zukunftsfähige Organisation."
+>
+  <main class="module-view" set:html={body}></main>
+</BaseLayout>

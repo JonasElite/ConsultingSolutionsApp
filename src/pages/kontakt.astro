@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/kontakt.html?raw';
+---
+<BaseLayout
+  title="Kontakt | KI-Beratung"
+  description="Vereinbaren Sie ein unverbindliches Erstgespräch. Wir melden uns innerhalb von 24 Stunden."
+>
+  <main set:html={body}></main>
+</BaseLayout>

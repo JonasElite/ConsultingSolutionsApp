@@ -1,0 +1,26 @@
+---
+const base = import.meta.env.BASE_URL;
+const withBase = (r: string) => {
+  const b = base.replace(/\/$/, '');
+  return (b + (r === '/' ? '/' : '/' + r.replace(/^\//, ''))) || '/';
+};
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <svg width="36" height="28" viewBox="0 0 40 32" fill="none">
+        <rect width="40" height="32" rx="2" fill="#0091da" />
+        <text x="20" y="22" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="15">KI</text>
+      </svg>
+      <span>KI<span class="footer-brand-accent">Beratung</span></span>
+    </div>
+    <div class="footer-links">
+      <a href={withBase('/')}>Übersicht</a>
+      <a href={withBase('/team')}>Team</a>
+      <a href={withBase('/kontakt')}>Kontakt</a>
+    </div>
+    <p class="footer-copy">© {year} KI-Beratung. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
