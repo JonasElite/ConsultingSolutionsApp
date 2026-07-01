@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/modul-3.html?raw';
+---
+<BaseLayout
+  title="Modul 3 – KI-Governance | KI-Beratung"
+  description="Rollen, EU-AI-Act-Einordnung, Risikoklassifizierung und Compliance-Framework für eine rechtssichere KI-Nutzung."
+>
+  <main class="module-view" set:html={body}></main>
+</BaseLayout>

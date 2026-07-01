@@ -253,9 +253,10 @@ a, button, [role='button'], input, select, textarea {
   padding-block: clamp(var(--space-16), 8vw, var(--space-24));
 }
 
-/* --- Views (SPA routing) --- */
-.view { display: none; }
-.view.active { display: block; }
+/* --- Page layout (multi-page routing) ---
+   Every route renders its own <main>; the fixed nav is offset with padding.
+   (Legacy .view / .view.active show-hide rules were removed in the Astro migration.) */
+main { display: block; }
 
 /* ============================================================
    NAVIGATION
@@ -426,8 +427,8 @@ a, button, [role='button'], input, select, textarea {
   width: 100%;
 }
 
-/* Spacer below nav */
-main.view { padding-top: 64px; }
+/* Spacer below fixed nav */
+main { padding-top: 64px; }
 
 /* ============================================================
    BUTTONS — KPMG-style: square corners, bold uppercase
@@ -2021,14 +2022,16 @@ main.view { padding-top: 64px; }
   gap: var(--space-6);
 }
 
-.footer-links button {
+.footer-links button,
+.footer-links a {
   font-size: var(--text-sm);
   color: rgba(255,255,255,0.7);
   font-weight: 500;
   transition: color var(--transition);
 }
 
-.footer-links button:hover { color: var(--color-accent2); }
+.footer-links button:hover,
+.footer-links a:hover { color: var(--color-accent2); }
 
 .footer-copy {
   font-size: var(--text-xs);
@@ -2405,4 +2408,109 @@ main.view { padding-top: 64px; }
   .hero-badge,
   .hero-title-accent,
   .bundle-banner { animation: none !important; }
+}
+
+/* ============================================================
+   MODERNIZATION LAYER (Astro migration, 2026 refresh)
+   Additive polish only — preserves the existing KPMG design
+   direction while smoothing motion, depth and interaction.
+   ============================================================ */
+
+/* Respect the OS setting, but let the theme toggle win instantly. */
+html { color-scheme: light dark; }
+[data-theme='light'] { color-scheme: light; }
+[data-theme='dark']  { color-scheme: dark; }
+
+/* Cross-document view transitions between routes (progressive enhancement:
+   supported browsers get a soft fade, others navigate normally). */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
+/* Interactive elements share a consistent, springy lift + shadow. */
+.module-card,
+.deliverable-item,
+.team-card,
+.sidebar-card {
+  will-change: transform;
+}
+
+.module-card:hover,
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+.module-card:active,
+.team-card:active { transform: translateY(-2px); }
+
+/* Navigation elements that became <a> in the migration must not inherit the
+   global underline-on-hover used for body links. */
+.nav-logo,
+.nav-link,
+.nav-cta,
+.back-btn,
+.team-module-tag,
+.footer-brand,
+.footer-links a {
+  text-decoration: none;
+}
+.nav-logo:hover,
+.nav-link:hover,
+.nav-cta:hover,
+.back-btn:hover,
+.team-module-tag:hover,
+.footer-links a:hover {
+  text-decoration: none;
+}
+
+/* Clickable affordances migrated from inline onclick handlers. */
+[data-link] { cursor: pointer; }
+.module-card,
+.bundle-banner,
+.team-module-tag,
+.contact-module-list span { cursor: pointer; }
+
+/* Buttons gain a subtle, GPU-friendly press interaction. */
+.btn:active { transform: translateY(1px) scale(0.99); }
+
+/* Gentle focus ring upgrade for keyboard users on cards/links. */
+[data-link]:focus-visible,
+.module-card:focus-visible,
+.team-card:focus-visible {
+  outline: 2px solid var(--color-accent2);
+  outline-offset: 4px;
+}
+
+/* Reveal-on-scroll base state (JS adds .is-visible). Elements stay
+   fully visible if JS is disabled — no content is hidden by default. */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Nicer form fields: clearer focus, consistent radius. */
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  box-shadow: 0 0 0 3px var(--color-accent2-highlight);
+}
+
+/* Slightly richer surface depth in dark mode. */
+[data-theme='dark'] .module-card,
+[data-theme='dark'] .team-card,
+[data-theme='dark'] .sidebar-card {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
 }

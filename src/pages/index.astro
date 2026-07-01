@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import body from '../fragments/home.html?raw';
+---
+<BaseLayout>
+  <main set:html={body}></main>
+</BaseLayout>
