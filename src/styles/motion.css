@@ -1,0 +1,79 @@
+/* ============================================================
+   MOTION SYSTEM
+   Central motion tokens + reveal base states. Every animation
+   references these so timing/easing stay consistent and
+   purposeful. Loaded after the design layers.
+   ============================================================ */
+
+:root {
+  /* Point the type tokens at the self-hosted variable fonts
+     (Fontsource family names), keeping the previous stack as fallback. */
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Durations — kept within the 200–800ms guardrail */
+  --dur-fast: 200ms;   /* micro-feedback: hover, tap */
+  --dur-base: 400ms;   /* standard entries */
+  --dur-slow: 700ms;   /* large reveals, storytelling */
+
+  /* Easing — ease-out for entries, ease-in-out for continuous */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Stagger step for lists/grids */
+  --stagger: 60ms;
+}
+
+/* ------------------------------------------------------------
+   Reveal base states.
+   JS adds `.is-inview` when the element scrolls into view.
+   Content is fully visible by default; the hidden state is only
+   applied once JS confirms it can animate (class `motion-ready`
+   on <html>). This guarantees CLS = 0 and no hidden content when
+   JS is off or reduced-motion is on.
+   ------------------------------------------------------------ */
+.motion-ready [data-reveal] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.motion-ready [data-reveal='up']      { transform: translate3d(0, 24px, 0); }
+.motion-ready [data-reveal='down']    { transform: translate3d(0, -24px, 0); }
+.motion-ready [data-reveal='left']    { transform: translate3d(24px, 0, 0); }
+.motion-ready [data-reveal='right']   { transform: translate3d(-24px, 0, 0); }
+.motion-ready [data-reveal='scale']   { transform: scale(0.96); }
+
+.motion-ready [data-reveal].is-inview {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+
+/* Word-level text reveal. Words rise + fade into place. Text stays
+   in the DOM (accessible); only transform/opacity animate (no CLS). */
+.split-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.motion-ready .split-word {
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0);
+}
+
+/* Magnetic + custom-cursor helpers are transform-only. */
+[data-magnetic] { will-change: transform; }
+
+/* ------------------------------------------------------------
+   Reduced motion: hard kill-switch.
+   Everything is shown in its final state, no transitions.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .motion-ready [data-reveal],
+  .motion-ready [data-reveal].is-inview,
+  .motion-ready .split-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

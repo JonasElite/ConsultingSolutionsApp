@@ -1,8 +1,13 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+// Self-hosted variable fonts (no external requests, no render-blocking).
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import '../styles/theme-v2.css';
+import '../styles/motion.css';
 
 interface Props {
   title?: string;
@@ -35,26 +40,33 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:locale" content="de_DE" />
     <meta name="theme-color" content="#00338d" />
 
-    <!-- No-flash theme: applied before first paint -->
+    <!-- Soft cross-document transitions between routes -->
+    <ViewTransitions />
+
+    <!-- Applied before first paint: theme + motion-ready (prevents flashes) -->
     <script is:inline>
       (() => {
+        const html = document.documentElement;
         try {
           const stored = localStorage.getItem('theme');
-          const theme =
-            stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch {
-          document.documentElement.setAttribute('data-theme', 'light');
+          html.setAttribute(
+            'data-theme',
+            stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+          );
+        } catch (e) {
+          html.setAttribute('data-theme', 'light');
         }
+        try {
+          if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            html.classList.add('motion-ready');
+            // Safety net: if the motion engine never boots, reveal everything.
+            setTimeout(() => {
+              if (!html.classList.contains('motion-booted')) html.classList.remove('motion-ready');
+            }, 2500);
+          }
+        } catch (e) {}
       })();
     </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -64,6 +76,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
     <script>
       import '../scripts/ui.ts';
+      import { initSmoothScroll, scrollTop, refreshTriggers } from '../scripts/motion';
+
+      initSmoothScroll();
+      // After a client navigation: jump to top, drop stale triggers, recalc.
+      document.addEventListener('astro:after-swap', scrollTop);
+      document.addEventListener('astro:page-load', refreshTriggers);
     </script>
   </body>
 </html>

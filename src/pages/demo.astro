@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Motion Demo | KI-Beratung" description="Design- und Motion-Playground: Text-Reveal, Stagger, Parallax, Magnetic, Count-up, Sticky-Storytelling.">
+  <main id="demo-root" class="demo">
+    <!-- 1 · Hero: word reveal + magnetic CTA + gradient motion -->
+    <section class="demo-hero">
+      <div class="demo-hero-bg" aria-hidden="true"></div>
+      <div class="container">
+        <p class="section-eyebrow">Motion Playground</p>
+        <h1 class="demo-title" data-reveal-text>Bewegung mit Bedeutung – kein Effekt&nbsp;ohne Zweck.</h1>
+        <p class="demo-lead" data-reveal="up">
+          Diese Route bündelt die Animations-Bausteine, damit du das Feeling prüfen kannst:
+          Text-Reveal, gestaffelte Einblendungen, Parallax, magnetische Buttons, Count-up und
+          Sticky-Storytelling. Alles GPU-basiert (nur transform/opacity), CLS = 0 und mit
+          <code>prefers-reduced-motion</code>-Abschaltung.
+        </p>
+        <div class="demo-actions" data-reveal="up">
+          <a class="btn btn-primary" href="#stagger" data-magnetic="0.4">Runterscrollen</a>
+          <a class="btn btn-ghost" href="/" data-magnetic="0.3">Zur Startseite</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Stagger reveal -->
+    <section id="stagger" class="section">
+      <div class="container">
+        <p class="section-eyebrow">1 · Stagger Reveal</p>
+        <h2 class="section-title">Gestaffeltes Einblenden</h2>
+        <p class="section-sub">Elemente erscheinen nacheinander beim Reinscrollen – erzeugt Lesefluss und Hierarchie.</p>
+        <div class="demo-grid">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <article class="demo-card" data-reveal="up">
+              <span class="demo-card-num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>Karte {i + 1}</h3>
+              <p>Weiche ease-out-Bewegung, 24&nbsp;px Versatz, {i * 60}&nbsp;ms Stagger.</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Parallax -->
+    <section class="section demo-parallax-section">
+      <div class="container">
+        <p class="section-eyebrow">2 · Parallax</p>
+        <h2 class="section-title">Ebenen mit Tiefe</h2>
+      </div>
+      <div class="demo-parallax" aria-hidden="true">
+        <div class="demo-layer demo-layer-1" data-parallax="0.15"></div>
+        <div class="demo-layer demo-layer-2" data-parallax="0.32"></div>
+        <div class="demo-layer demo-layer-3" data-parallax="0.5"></div>
+      </div>
+    </section>
+
+    <!-- 4 · Count-up -->
+    <section class="section">
+      <div class="container">
+        <p class="section-eyebrow">3 · Count-up</p>
+        <h2 class="section-title">Zahlen, die zählen</h2>
+        <div class="demo-stats">
+          <div class="demo-stat">
+            <span class="demo-stat-num"><span data-countup="4">0</span></span>
+            <span class="demo-stat-label">Beratungsmodule</span>
+          </div>
+          <div class="demo-stat">
+            <span class="demo-stat-num"><span data-countup="450" data-suffix="&nbsp;T€">0</span></span>
+            <span class="demo-stat-label">Full Journey Bundle</span>
+          </div>
+          <div class="demo-stat">
+            <span class="demo-stat-num"><span data-countup="18" data-suffix="&nbsp;Mo.">0</span></span>
+            <span class="demo-stat-label">Gesamtlaufzeit</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Sticky storytelling (pin) -->
+    <section class="demo-pin" id="demo-pin">
+      <div class="demo-pin-stage">
+        <div class="container demo-pin-inner">
+          <div class="demo-pin-copy">
+            <p class="section-eyebrow">4 · Sticky Storytelling</p>
+            <h2 class="section-title">Ein Gedanke pro Schritt</h2>
+            <p class="section-sub">Die Section bleibt fixiert, während der Inhalt beim Scrollen wechselt – ideal für Prozesse (Apple-Prinzip).</p>
+          </div>
+          <div class="demo-pin-steps">
+            <div class="demo-step" data-step="0"><span>01</span><p>Analyse — Potenziale sichtbar machen</p></div>
+            <div class="demo-step" data-step="1"><span>02</span><p>Befähigung — Menschen mitnehmen</p></div>
+            <div class="demo-step" data-step="2"><span>03</span><p>Verstetigung — dauerhaft verankern</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container demo-foot">
+        <p class="section-eyebrow">Barrierefreiheit</p>
+        <p class="section-sub">
+          Aktiviere in deinem System „Bewegung reduzieren“ und lade neu: alle Animationen
+          schalten sich ab, Inhalte erscheinen sofort. Auf Touch-Geräten ist Smooth-Scroll aus
+          (natives Momentum), aufwendige Effekte sind reduziert.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .demo-hero {
+    position: relative;
+    min-height: 84vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-block: var(--space-24);
+  }
+  .demo-hero-bg {
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(40rem 40rem at 20% 30%, color-mix(in srgb, var(--cyan) 26%, transparent), transparent 60%),
+      radial-gradient(38rem 38rem at 80% 70%, color-mix(in srgb, var(--violet) 22%, transparent), transparent 60%);
+    filter: blur(20px);
+    animation: demoDrift 18s var(--ease-inout) infinite alternate;
+  }
+  @keyframes demoDrift {
+    0%   { transform: translate3d(-3%, -2%, 0) scale(1); }
+    100% { transform: translate3d(3%, 2%, 0) scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .demo-hero-bg { animation: none; }
+  }
+  .demo-title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 16ch;
+    margin-block: var(--space-4);
+  }
+  .demo-lead { max-width: 60ch; color: var(--color-text-muted); font-size: var(--text-lg); }
+  .demo-lead code { font-family: var(--font-mono); color: var(--cyan); font-size: 0.9em; }
+  .demo-actions { display: flex; gap: var(--space-4); margin-top: var(--space-8); flex-wrap: wrap; }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+  .demo-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-2xl);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+  }
+  .demo-card-num { font-family: var(--font-mono); color: var(--cyan); font-weight: 700; }
+  .demo-card h3 { margin-block: var(--space-2) var(--space-1); }
+  .demo-card p { color: var(--color-text-muted); font-size: var(--text-sm); }
+
+  .demo-parallax-section { position: relative; }
+  .demo-parallax { position: relative; height: 42vh; margin-top: var(--space-8); }
+  .demo-layer {
+    position: absolute;
+    border-radius: var(--radius-2xl);
+    inset-inline: 0;
+    margin-inline: auto;
+    filter: blur(2px);
+    opacity: 0.85;
+  }
+  .demo-layer-1 { width: 90%; height: 60%; top: 20%; background: color-mix(in srgb, var(--color-primary) 40%, transparent); }
+  .demo-layer-2 { width: 66%; height: 55%; top: 26%; background: color-mix(in srgb, var(--cyan) 34%, transparent); }
+  .demo-layer-3 { width: 40%; height: 48%; top: 32%; background: color-mix(in srgb, var(--violet) 40%, transparent); filter: none; }
+
+  .demo-stats { display: flex; gap: var(--space-10); flex-wrap: wrap; margin-top: var(--space-8); }
+  .demo-stat-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-text), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .demo-stat-label { display: block; color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-1); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); }
+
+  .demo-pin { position: relative; }
+  .demo-pin-stage { min-height: 100vh; display: flex; align-items: center; }
+  .demo-pin-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; }
+  .demo-pin-steps { display: grid; gap: var(--space-4); }
+  .demo-step {
+    display: flex; align-items: center; gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    opacity: 0.35;
+    transition: opacity var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .demo-step.active { opacity: 1; border-color: color-mix(in srgb, var(--cyan) 55%, transparent); }
+  .demo-step span { font-family: var(--font-mono); font-size: var(--text-xl); color: var(--cyan); }
+  .demo-step p { font-family: var(--font-display); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .demo-pin-inner { grid-template-columns: 1fr; gap: var(--space-8); }
+  }
+</style>
+
+<script>
+  import { revealText, revealOnScroll, parallax, magnetic, countUp, gsap, reducedMotion } from '../scripts/motion';
+
+  function setupPin() {
+    const stage = document.querySelector<HTMLElement>('#demo-pin');
+    const steps = Array.from(document.querySelectorAll<HTMLElement>('#demo-pin .demo-step'));
+    if (!stage || !steps.length || stage.dataset.pin) return;
+    stage.dataset.pin = '1';
+
+    const setActive = (idx: number) =>
+      steps.forEach((s, i) => s.classList.toggle('active', i === idx));
+    setActive(0);
+
+    if (reducedMotion || matchMedia('(hover: none)').matches) {
+      steps.forEach((s) => s.classList.add('active'));
+      return;
+    }
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: stage,
+        start: 'top top',
+        end: '+=200%',
+        pin: '.demo-pin-stage',
+        scrub: true,
+        onUpdate: (self) => setActive(Math.min(steps.length - 1, Math.floor(self.progress * steps.length))),
+      },
+    });
+  }
+
+  function setup() {
+    if (!document.getElementById('demo-root')) return; // only on this page
+    document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
+    revealOnScroll();
+    parallax();
+    magnetic();
+    countUp();
+    setupPin();
+  }
+
+  document.addEventListener('astro:page-load', setup);
+</script>
