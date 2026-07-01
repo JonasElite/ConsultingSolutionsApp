@@ -5,3 +5,39 @@ import body from '../fragments/home.html?raw';
 <BaseLayout>
   <main set:html={body}></main>
 </BaseLayout>
+
+<script>
+  import { gsap, splitWords, magnetic, reducedMotion } from '../scripts/motion';
+  import { initNeural } from '../scripts/neural';
+
+  function initHero() {
+    const hero = document.querySelector<HTMLElement>('.hero');
+    if (!hero || hero.dataset.anim) return;
+    hero.dataset.anim = '1';
+
+    const canvas = hero.querySelector<HTMLCanvasElement>('canvas[data-neural]');
+    if (canvas) initNeural(canvas);
+
+    const line = hero.querySelector<HTMLElement>('.hero-line[data-split]');
+    const words = line ? splitWords(line) : [];
+    const rest = Array.from(
+      hero.querySelectorAll<HTMLElement>('[data-hero-in]'),
+    );
+    magnetic(hero);
+
+    if (reducedMotion) {
+      gsap.set([...words, ...rest], { opacity: 1, y: 0 });
+      return;
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
+    tl.to(hero.querySelector('.hero-badge'), { autoAlpha: 1, y: 0 })
+      .to(words, { autoAlpha: 1, y: 0, stagger: 0.05 }, '-=0.4')
+      .to(hero.querySelector('.hero-title-accent'), { autoAlpha: 1, y: 0 }, '-=0.5')
+      .to(hero.querySelector('.hero-sub'), { autoAlpha: 1, y: 0 }, '-=0.45')
+      .to(hero.querySelector('.hero-actions'), { autoAlpha: 1, y: 0 }, '-=0.5')
+      .to(hero.querySelector('.hero-stats'), { autoAlpha: 1, y: 0 }, '-=0.5');
+  }
+
+  document.addEventListener('astro:page-load', initHero);
+</script>

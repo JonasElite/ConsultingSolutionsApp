@@ -224,6 +224,20 @@ body {
   filter: drop-shadow(0 0 14px color-mix(in srgb, var(--cyan) 40%, transparent));
 }
 
+/* ---------- Hero: neural signature canvas + line layout ---------- */
+.hero-neural {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.hero-title .hero-line,
+.hero-title .hero-title-accent {
+  display: block;
+}
+
 /* ---------- Hero: richer aurora, tighter type ---------- */
 .hero-orb-1 { background: radial-gradient(circle, var(--cyan) 0%, transparent 70%); opacity: 0.4; }
 .hero-title { font-weight: 600; letter-spacing: -0.035em; }

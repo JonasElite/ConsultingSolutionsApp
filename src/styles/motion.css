@@ -60,6 +60,13 @@
   transform: translate3d(0, 0.5em, 0);
 }
 
+/* Hero entrance elements: hidden until the hero timeline reveals them. */
+.motion-ready [data-hero-in] {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+}
+
 /* Magnetic + custom-cursor helpers are transform-only. */
 [data-magnetic] { will-change: transform; }
 
@@ -71,6 +78,7 @@
   html { scroll-behavior: auto; }
   .motion-ready [data-reveal],
   .motion-ready [data-reveal].is-inview,
+  .motion-ready [data-hero-in],
   .motion-ready .split-word {
     opacity: 1 !important;
     transform: none !important;
