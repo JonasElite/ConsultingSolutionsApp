@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KI-Transformation | Beratungsportfolio</title>
+  <meta name="description" content="Ihr Partner für KI-Transformation im Mittelstand. Modulares Beratungsportfolio von der Strategie bis zur Verankerung." />
+
+  <!-- Futuristic display font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo" onclick="showView('home')">
+        <svg width="40" height="32" viewBox="0 0 40 32" fill="none" aria-label="KI Beratung Logo">
+          <rect width="40" height="32" rx="2" fill="#0091da"/>
+          <text x="20" y="22" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="15" letter-spacing="0.5">KI</text>
+        </svg>
+        <span class="nav-brand">KI<span class="nav-brand-accent">Beratung</span></span>
+      </a>
+
+      <div class="nav-links">
+        <button class="nav-link" onclick="showView('home')" data-view="home">Übersicht</button>
+        <button class="nav-link" onclick="showView('module1')" data-view="module1">Modul 1</button>
+        <button class="nav-link" onclick="showView('module2')" data-view="module2">Modul 2</button>
+        <button class="nav-link" onclick="showView('module3')" data-view="module3">Modul 3</button>
+        <button class="nav-link" onclick="showView('module4')" data-view="module4">Modul 4</button>
+        <button class="nav-link" onclick="showView('team')" data-view="team">Team</button>
+        <button class="nav-link nav-cta" onclick="showView('contact')">Kontakt</button>
+      </div>
+
+      <div class="nav-right">
+        <button class="theme-toggle" data-theme-toggle aria-label="Dark mode umschalten">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="nav-mobile" id="navMobile">
+      <button class="nav-link" onclick="showView('home'); closeMobileNav()">Übersicht</button>
+      <button class="nav-link" onclick="showView('module1'); closeMobileNav()">Modul 1 – KI-Mehrwert</button>
+      <button class="nav-link" onclick="showView('module2'); closeMobileNav()">Modul 2 – KI-Kultur</button>
+      <button class="nav-link" onclick="showView('module3'); closeMobileNav()">Modul 3 – KI-Governance</button>
+      <button class="nav-link" onclick="showView('module4'); closeMobileNav()">Modul 4 – Organisationsmodell</button>
+      <button class="nav-link" onclick="showView('team'); closeMobileNav()">Team</button>
+      <button class="nav-link" onclick="showView('contact'); closeMobileNav()">Kontakt</button>
+    </div>
+  </nav>
+
+  <!-- ===== VIEW: HOME ===== -->
+  <main id="view-home" class="view active">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-grid"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">KI-Transformation im Mittelstand</div>
+          <h1 class="hero-title">Von der KI-Idee<br/><span class="hero-title-accent">zur gelebten Praxis</span></h1>
+          <p class="hero-sub">Wir begleiten mittelständische Unternehmen auf dem Weg zur KI-fit Organisation — von der Potenzialanalyse über Governance bis zur nachhaltigen Verankerung.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="showView('module1')">Portfolio erkunden</button>
+            <button class="btn btn-ghost" onclick="showView('team')">Unser Team</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num">4</span>
+              <span class="stat-label">Beratungsmodule</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-num">250 – 450 T€</span>
+              <span class="stat-label">Full Journey Bundle</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-num">6 – 18 Mo.</span>
+              <span class="stat-label">Gesamtlaufzeit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module Overview Cards -->
+    <section class="section modules-overview">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Unser Angebot</p>
+          <h2 class="section-title">Die 4 Module im Überblick</h2>
+          <p class="section-sub">Jedes Modul kann einzeln oder als Teil der Full Journey gebucht werden. Gemeinsam decken sie den gesamten KI-Transformationspfad ab.</p>
+        </div>
+        <div class="modules-grid">
+          <!-- M1 -->
+          <div class="module-card" onclick="showView('module1')">
+            <div class="module-card-header">
+              <div class="module-num">01</div>
+              <div class="module-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4v20M4 14h20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="5" r="2" fill="currentColor"/><circle cx="14" cy="23" r="2" fill="currentColor"/><circle cx="5" cy="14" r="2" fill="currentColor"/><circle cx="23" cy="14" r="2" fill="currentColor"/></svg>
+              </div>
+            </div>
+            <h3 class="module-card-title">KI-Mehrwert &amp; Use Cases</h3>
+            <p class="module-card-desc">Rapid Value Assessment, Process Mining, priorisierte Longlist mit Business Cases</p>
+            <div class="module-card-meta">
+              <span class="module-price">35.000 – 80.000 €</span>
+              <span class="module-duration">4 – 6 Wochen</span>
+            </div>
+            <div class="module-card-cta">
+              Mehr erfahren
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- M2 -->
+          <div class="module-card" onclick="showView('module2')">
+            <div class="module-card-header">
+              <div class="module-num">02</div>
+              <div class="module-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="2"/><circle cx="19" cy="9" r="4" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="19" r="4" stroke="currentColor" stroke-width="2"/><path d="M13 9h2M9 19h2M17 19h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <h3 class="module-card-title">KI-Kultur &amp; Awareness</h3>
+            <p class="module-card-desc">Workshops, Sensibilisierung, Kommunikationskonzept für alle Hierarchieebenen</p>
+            <div class="module-card-meta">
+              <span class="module-price">50.000 – 70.000 €</span>
+              <span class="module-duration">6 – 8 Wochen</span>
+            </div>
+            <div class="module-card-cta">
+              Mehr erfahren
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- M3 -->
+          <div class="module-card" onclick="showView('module3')">
+            <div class="module-card-header">
+              <div class="module-num">03</div>
+              <div class="module-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3l2.5 5 5.5.8-4 3.9.9 5.5L14 16l-4.9 2.2.9-5.5L6 8.8l5.5-.8L14 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 22h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <h3 class="module-card-title">KI-Governance</h3>
+            <p class="module-card-desc">Rollen, EU-AI-Act-Einordnung, Risikoklassifizierung und Compliance-Framework</p>
+            <div class="module-card-meta">
+              <span class="module-price">50.000 – 80.000 €</span>
+              <span class="module-duration">8 – 10 Wochen</span>
+            </div>
+            <div class="module-card-cta">
+              Mehr erfahren
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- M4 -->
+          <div class="module-card" onclick="showView('module4')">
+            <div class="module-card-header">
+              <div class="module-num">04</div>
+              <div class="module-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="16" width="6" height="8" rx="1" stroke="currentColor" stroke-width="2"/><rect x="11" y="10" width="6" height="14" rx="1" stroke="currentColor" stroke-width="2"/><rect x="18" y="4" width="6" height="20" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+            </div>
+            <h3 class="module-card-title">Organisationsmodell &amp; Verstetigung</h3>
+            <p class="module-card-desc">Multiplikatorenprogramme, KI-Playbook, dauerhafte Verankerung in Linie und Führung</p>
+            <div class="module-card-meta">
+              <span class="module-price">80.000 – 180.000 €</span>
+              <span class="module-duration">3 – 6 Monate</span>
+            </div>
+            <div class="module-card-cta">
+              Mehr erfahren
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bundle Banner -->
+        <div class="bundle-banner" onclick="showView('contact')">
+          <div class="bundle-inner">
+            <div class="bundle-label">Full Journey Bundle</div>
+            <div class="bundle-title">Modul 1–4 kombiniert: Mittelstand 250 – 450 T€</div>
+            <div class="bundle-sub">Alle vier Module im Gesamtpaket — optimal aufeinander abgestimmt, mit klarem Eskalationspfad und dediziertem Steering Committee.</div>
+          </div>
+          <button class="btn btn-white">Paket anfragen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why us -->
+    <section class="section why-section">
+      <div class="container">
+        <div class="why-grid">
+          <div class="why-text">
+            <p class="section-eyebrow">Unser Ansatz</p>
+            <h2 class="section-title">Wir verstehen die Region und die Bedürfnisse der Kunden</h2>
+            <p class="section-body">KI-Transformation gelingt nur, wenn Technologie, Menschen und Organisation zusammen gedacht werden. Wir kombinieren methodische Strenge mit regionalem Verständnis und begleiten Sie von der ersten Idee bis zur messbaren Wirkung.</p>
+            <ul class="why-list">
+              <li><span class="why-check">✓</span> Datenbasierte Prozesstransparenz als Ausgangspunkt</li>
+              <li><span class="why-check">✓</span> Technologieoffen – SAP, Microsoft, Google kompatibel</li>
+              <li><span class="why-check">✓</span> EU AI Act-konforme Governance von Beginn an</li>
+              <li><span class="why-check">✓</span> Wirksamkeit messbar durch klare KPIs</li>
+              <li><span class="why-check">✓</span> Skalierbare Methoden-Sets für Ihren Mittelstand</li>
+            </ul>
+            <button class="btn btn-primary" onclick="showView('team')">Unser Team kennenlernen</button>
+          </div>
+          <div class="why-visual">
+            <div class="why-network">
+              <svg viewBox="0 0 340 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="network-svg">
+                <defs>
+                  <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <!-- Lines -->
+                <line x1="170" y1="150" x2="80" y2="80" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="260" y2="80" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="80" y2="220" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="260" y2="220" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="170" y2="40" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="50" y2="150" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="290" y2="150" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="170" y1="150" x2="170" y2="260" stroke="var(--color-primary)" stroke-width="1.5" stroke-opacity="0.4"/>
+                <line x1="80" y1="80" x2="170" y2="40" stroke="var(--color-primary)" stroke-width="1" stroke-opacity="0.2"/>
+                <line x1="260" y1="80" x2="170" y2="40" stroke="var(--color-primary)" stroke-width="1" stroke-opacity="0.2"/>
+                <line x1="80" y1="80" x2="50" y2="150" stroke="var(--color-primary)" stroke-width="1" stroke-opacity="0.2"/>
+                <line x1="260" y1="80" x2="290" y2="150" stroke="var(--color-primary)" stroke-width="1" stroke-opacity="0.2"/>
+                <!-- Outer nodes -->
+                <circle cx="80" cy="80" r="8" fill="var(--color-primary)" opacity="0.5" class="node-pulse"/>
+                <circle cx="260" cy="80" r="8" fill="var(--color-primary)" opacity="0.5" class="node-pulse" style="animation-delay:0.5s"/>
+                <circle cx="80" cy="220" r="8" fill="var(--color-primary)" opacity="0.5" class="node-pulse" style="animation-delay:1s"/>
+                <circle cx="260" cy="220" r="8" fill="var(--color-primary)" opacity="0.5" class="node-pulse" style="animation-delay:1.5s"/>
+                <circle cx="170" cy="40" r="6" fill="var(--color-primary)" opacity="0.4"/>
+                <circle cx="50" cy="150" r="6" fill="var(--color-primary)" opacity="0.4"/>
+                <circle cx="290" cy="150" r="6" fill="var(--color-primary)" opacity="0.4"/>
+                <circle cx="170" cy="260" r="6" fill="var(--color-primary)" opacity="0.4"/>
+                <!-- Center node -->
+                <circle cx="170" cy="150" r="28" fill="url(#nodeGrad)"/>
+                <circle cx="170" cy="150" r="16" fill="var(--color-primary)" opacity="0.9"/>
+                <text x="170" y="155" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Arial, Helvetica, sans-serif">KI</text>
+                <!-- Labels -->
+                <text x="80" y="64" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="Arial, Helvetica, sans-serif">Strategie</text>
+                <text x="260" y="64" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="Arial, Helvetica, sans-serif">Technologie</text>
+                <text x="75" y="244" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="Arial, Helvetica, sans-serif">Governance</text>
+                <text x="265" y="244" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="Arial, Helvetica, sans-serif">Kultur</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Bereit für Ihre KI-Transformation?</h2>
+          <p>Starten Sie mit einem unverbindlichen Erstgespräch und erfahren Sie, welches Modul für Ihr Unternehmen den größten Mehrwert bietet.</p>
+          <button class="btn btn-primary btn-lg" onclick="showView('contact')">Jetzt Gespräch vereinbaren</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== VIEW: MODULE 1 ===== -->
+  <main id="view-module1" class="view module-view">
+    <div class="module-hero" style="--module-color: var(--color-primary)">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <div class="module-hero-content">
+          <div class="module-num-large">01</div>
+          <div>
+            <p class="module-eyebrow">Modul 1</p>
+            <h1 class="module-hero-title">KI-Mehrwert &amp; Use Cases</h1>
+            <p class="module-hero-sub">Identifikation, Bewertung und Priorisierung der KI-Anwendungsfälle mit dem größten Business-Impact für Ihr Unternehmen.</p>
+            <div class="module-badges">
+              <span class="badge badge-price">35.000 – 80.000 €</span>
+              <span class="badge badge-time">4 – 6 Wochen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container module-content">
+      <div class="module-body-grid">
+        <div class="module-main">
+          <h2>Was wir liefern</h2>
+          <div class="deliverables-list">
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📊</div>
+              <div>
+                <h4>Rapid Value Assessment</h4>
+                <p>Strukturierte Analyse Ihrer Prozesslandschaft zur schnellen Identifikation von KI-Potenzialen. Innerhalb von 2 Wochen erhalten Sie einen ersten Überblick über Einsatzmöglichkeiten in Kernprozessen.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🔍</div>
+              <div>
+                <h4>Process Mining</h4>
+                <p>Datenbasierte Prozessanalyse zur Identifikation von Ineffizienzen und Automatisierungspotenzialen. Wir nutzen führende Process-Mining-Tools und liefern nachvollziehbare Visualisierungen Ihrer Ist-Prozesse.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📋</div>
+              <div>
+                <h4>Priorisierte Longlist mit Business Cases</h4>
+                <p>Alle identifizierten Use Cases werden hinsichtlich ROI, Umsetzungsaufwand, strategischer Relevanz und technischer Machbarkeit bewertet. Das Ergebnis: eine priorisierte Roadmap mit klaren Entscheidungsgrundlagen.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🎯</div>
+              <div>
+                <h4>Pilot-Empfehlung</h4>
+                <p>Aus der Longlist destillieren wir 2–3 Leuchtturmprojekte mit hohem Umsetzungspotenzial und schnellem ROI. Diese bilden die Basis für den Einstieg in die KI-Transformation.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-12)">Vorgehensmodell</h2>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Kick-off & Bestandsaufnahme</h4>
+                <p>Workshops mit Fachbereichen, Systemanalyse, Datenverfügbarkeit prüfen</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>Process Mining & Analyse</h4>
+                <p>Datenbasierte Prozessaufnahme, Schwachstellenanalyse, Potenzialidentifikation</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h4>Use Case Entwicklung</h4>
+                <p>Ideation, technische Machbarkeit, Nutzenpotenzial und Aufwandsschätzung</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h4>Business Cases & Roadmap</h4>
+                <p>ROI-Kalkulation, Priorisierung, Management-Präsentation mit konkreten Handlungsempfehlungen</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-sidebar">
+          <div class="sidebar-card">
+            <h4>Eckdaten</h4>
+            <dl class="sidebar-dl">
+              <dt>Investition</dt><dd>35.000 – 80.000 €</dd>
+              <dt>Laufzeit</dt><dd>4 – 6 Wochen</dd>
+              <dt>Teamgröße</dt><dd>2 – 3 Berater</dd>
+              <dt>Deliverables</dt><dd>Assessment-Report, Longlist, Business Cases, Pilot-Roadmap</dd>
+            </dl>
+          </div>
+          <div class="sidebar-card sidebar-card-primary">
+            <h4>Typische Ergebnisse</h4>
+            <ul class="sidebar-results">
+              <li>15–40% Prozesszeitreduktion in identifizierten Use Cases</li>
+              <li>Durchschnittlich 8–12 bewertete KI-Use-Cases</li>
+              <li>ROI-Potenzial: 3–5x Projektinvestition im Jahr 1</li>
+              <li>Klare Entscheidungsvorlage für das Management</li>
+            </ul>
+          </div>
+          <div class="sidebar-card">
+            <h4>Technologien</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">SAP</span>
+              <span class="tech-tag">Microsoft Azure</span>
+              <span class="tech-tag">Google Cloud</span>
+              <span class="tech-tag">Celonis</span>
+              <span class="tech-tag">UiPath</span>
+              <span class="tech-tag">Power BI</span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="showView('contact')">Modul anfragen</button>
+          <button class="btn btn-outline btn-full" onclick="showView('module2')">Weiter zu Modul 2 →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== VIEW: MODULE 2 ===== -->
+  <main id="view-module2" class="view module-view">
+    <div class="module-hero" style="--module-color: var(--color-accent2)">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <div class="module-hero-content">
+          <div class="module-num-large">02</div>
+          <div>
+            <p class="module-eyebrow">Modul 2</p>
+            <h1 class="module-hero-title">KI-Kultur &amp; Awareness</h1>
+            <p class="module-hero-sub">Erfolgreiche KI-Transformation ist zu 80 % eine Frage der Menschen. Wir schaffen das Mindset und die Kompetenzen, die Ihre Organisation zukunftsfähig machen.</p>
+            <div class="module-badges">
+              <span class="badge badge-price">50.000 – 70.000 €</span>
+              <span class="badge badge-time">6 – 8 Wochen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container module-content">
+      <div class="module-body-grid">
+        <div class="module-main">
+          <h2>Was wir liefern</h2>
+          <div class="deliverables-list">
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🎓</div>
+              <div>
+                <h4>Maßgeschneiderte Workshops</h4>
+                <p>Zielgruppenspezifische Formate für Management, Middle Management und operative Teams. Von 3-stündigen Awareness-Sessions bis zu mehrtägigen Deep-Dives mit praxisnahen KI-Experimenten.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">💡</div>
+              <div>
+                <h4>Sensibilisierungsprogramm</h4>
+                <p>Modulares Lernprogramm zur Stärkung des KI-Grundverständnisses. Inhalte: KI-Grundlagen, Chancen und Risiken, Auswirkungen auf die eigene Rolle, Ethik und verantwortungsvoller Umgang.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📢</div>
+              <div>
+                <h4>Kommunikationskonzept</h4>
+                <p>Entwicklung einer internen Kommunikationsstrategie zur Begleitung der KI-Transformation. Includes Change Story, Führungskräfte-Botschaften, FAQ-Dokument und regelmäßige Update-Formate.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🏆</div>
+              <div>
+                <h4>KI-Champion-Netzwerk</h4>
+                <p>Identifikation und Befähigung von KI-Champions in den Fachbereichen. Diese Multiplikatoren treiben den Wandel von innen und sichern die Nachhaltigkeit der Veränderung.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-12)">Workshop-Formate</h2>
+          <div class="formats-grid">
+            <div class="format-card">
+              <h4>Executive Briefing</h4>
+              <p>3 Stunden | C-Level & Führungskräfte</p>
+              <p class="format-desc">Strategische Einordnung, Benchmark, Entscheidungsrahmen</p>
+            </div>
+            <div class="format-card">
+              <h4>KI-Awareness Day</h4>
+              <p>1 Tag | Middle Management</p>
+              <p class="format-desc">Hands-on Experimente, Use Case Entwicklung, Rollenklärung</p>
+            </div>
+            <div class="format-card">
+              <h4>Team-Deep-Dive</h4>
+              <p>2 Tage | Operative Teams</p>
+              <p class="format-desc">Prozessbezogene KI-Anwendungen, Prompt Engineering, Alltagsintegration</p>
+            </div>
+            <div class="format-card">
+              <h4>Champion-Bootcamp</h4>
+              <p>3 Tage | KI-Champions</p>
+              <p class="format-desc">Vertieftes KI-Wissen, Moderationstechniken, Multiplikator-Rolle</p>
+            </div>
+          </div>
+        </div>
+        <div class="module-sidebar">
+          <div class="sidebar-card">
+            <h4>Eckdaten</h4>
+            <dl class="sidebar-dl">
+              <dt>Investition</dt><dd>50.000 – 70.000 €</dd>
+              <dt>Laufzeit</dt><dd>6 – 8 Wochen</dd>
+              <dt>Teamgröße</dt><dd>2 Berater + 1 Change-Spezialist</dd>
+              <dt>Deliverables</dt><dd>Workshop-Programme, Kommunikationskonzept, Champion-Netzwerk, Messung</dd>
+            </dl>
+          </div>
+          <div class="sidebar-card sidebar-card-primary">
+            <h4>Erfolgsindikatoren</h4>
+            <ul class="sidebar-results">
+              <li>KI-Readiness-Score: Baseline → Ziel</li>
+              <li>Anzahl befähigter KI-Champions</li>
+              <li>Mitarbeiter-NPS zur KI-Transformation</li>
+              <li>Self-reported Kompetenzsteigerung</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="showView('contact')">Modul anfragen</button>
+          <button class="btn btn-outline btn-full" onclick="showView('module3')">Weiter zu Modul 3 →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== VIEW: MODULE 3 ===== -->
+  <main id="view-module3" class="view module-view">
+    <div class="module-hero">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <div class="module-hero-content">
+          <div class="module-num-large">03</div>
+          <div>
+            <p class="module-eyebrow">Modul 3</p>
+            <h1 class="module-hero-title">KI-Governance</h1>
+            <p class="module-hero-sub">Rechtssicher und verantwortungsvoll. Wir etablieren ein belastbares KI-Governance-Framework das EU AI Act-konform ist und Ihre Organisation schützt.</p>
+            <div class="module-badges">
+              <span class="badge badge-price">50.000 – 80.000 €</span>
+              <span class="badge badge-time">8 – 10 Wochen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container module-content">
+      <div class="module-body-grid">
+        <div class="module-main">
+          <h2>Was wir liefern</h2>
+          <div class="deliverables-list">
+            <div class="deliverable-item">
+              <div class="deliverable-icon">👥</div>
+              <div>
+                <h4>Rollen &amp; Verantwortlichkeiten</h4>
+                <p>Definition klarer Rollen im KI-Betrieb: AI Owner, AI Risk Manager, Data Steward, AI Ethics Officer. Entwicklung eines RACI-Modells und Einbettung in bestehende Governance-Strukturen.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">⚖️</div>
+              <div>
+                <h4>EU AI Act Einordnung</h4>
+                <p>Systematische Einordnung aller KI-Systeme in das Risikostufenmodell des EU AI Acts. Ableitung konkreter Handlungspflichten und Umsetzungsfahrplan für die Compliance bis 2025/2026.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🔒</div>
+              <div>
+                <h4>Risikoklassifizierung</h4>
+                <p>Entwicklung eines unternehmensinternen Risiko-Frameworks für KI-Systeme. Bewertung nach Anwendungsbereich, Entscheidungsrelevanz, Datensensitivität und Auswirkungsintensität.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📝</div>
+              <div>
+                <h4>KI-Policy &amp; Guidelines</h4>
+                <p>Entwicklung einer unternehmensweiten KI-Policy und operationaler Guidelines für den täglichen Umgang mit KI-Tools. Inkl. Acceptable-Use-Policy, Datenschutzregeln und Eskalationspfade.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-12)">Compliance Framework</h2>
+          <div class="compliance-grid">
+            <div class="compliance-card compliance-low">
+              <span class="risk-label">Geringes Risiko</span>
+              <p>Chatbots, Empfehlungssysteme, Content-Generierung — transparenzpflichtig, selbstreguliert</p>
+            </div>
+            <div class="compliance-card compliance-high">
+              <span class="risk-label">Hohes Risiko</span>
+              <p>HR-Entscheidungen, Kreditwürdigkeit, Biometrie — konforme Dokumentation, Audit-Trail</p>
+            </div>
+            <div class="compliance-card compliance-unacceptable">
+              <span class="risk-label">Verboten (EU AI Act)</span>
+              <p>Social Scoring, Manipulation, biometrische Massenüberwachung — vollständig verboten</p>
+            </div>
+          </div>
+        </div>
+        <div class="module-sidebar">
+          <div class="sidebar-card">
+            <h4>Eckdaten</h4>
+            <dl class="sidebar-dl">
+              <dt>Investition</dt><dd>50.000 – 80.000 €</dd>
+              <dt>Laufzeit</dt><dd>8 – 10 Wochen</dd>
+              <dt>Teamgröße</dt><dd>2 Berater + 1 Legal-Experte</dd>
+              <dt>Deliverables</dt><dd>Governance-Framework, Rollenmodell, Risk Assessment, KI-Policy</dd>
+            </dl>
+          </div>
+          <div class="sidebar-card sidebar-card-primary">
+            <h4>Ihr Nutzen</h4>
+            <ul class="sidebar-results">
+              <li>Rechtssicherheit im Umgang mit KI</li>
+              <li>EU AI Act-Compliance-Roadmap</li>
+              <li>Klare Eskalations- und Entscheidungspfade</li>
+              <li>Grundlage für verantwortungsvolle KI-Skalierung</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="showView('contact')">Modul anfragen</button>
+          <button class="btn btn-outline btn-full" onclick="showView('module4')">Weiter zu Modul 4 →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== VIEW: MODULE 4 ===== -->
+  <main id="view-module4" class="view module-view">
+    <div class="module-hero">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <div class="module-hero-content">
+          <div class="module-num-large">04</div>
+          <div>
+            <p class="module-eyebrow">Modul 4</p>
+            <h1 class="module-hero-title">Organisationsmodell &amp; Verstetigung</h1>
+            <p class="module-hero-sub">KI nachhaltig in der DNA verankern. Wir entwickeln das Betriebsmodell und die Strukturen, die KI zum dauerhaften Wettbewerbsvorteil machen.</p>
+            <div class="module-badges">
+              <span class="badge badge-price">80.000 – 180.000 €</span>
+              <span class="badge badge-time">3 – 6 Monate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container module-content">
+      <div class="module-body-grid">
+        <div class="module-main">
+          <h2>Was wir liefern</h2>
+          <div class="deliverables-list">
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🌱</div>
+              <div>
+                <h4>Multiplikatorenprogramme</h4>
+                <p>Aufbau eines strukturierten Netzwerks interner KI-Multiplikatoren. Diese Personen fungieren als Schnittstelle zwischen IT und Fachbereichen und treiben die KI-Adoption kontinuierlich voran.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📖</div>
+              <div>
+                <h4>KI-Playbook</h4>
+                <p>Entwicklung eines umfassenden, lebendigen KI-Playbooks als zentrale Wissens- und Orientierungsquelle. Beinhaltet Use-Case-Steckbriefe, Best Practices, Entscheidungsleitfäden und Lessons Learned.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">🏗️</div>
+              <div>
+                <h4>KI Center of Excellence</h4>
+                <p>Aufbau und Etablierung eines KI Center of Excellence (CoE) als organisatorisches Dach. Definition von Aufgaben, Besetzung, Budgetrahmen und Schnittstellen zu IT, HR und Business.</p>
+              </div>
+            </div>
+            <div class="deliverable-item">
+              <div class="deliverable-icon">📈</div>
+              <div>
+                <h4>Verankerung in Linie und Führung</h4>
+                <p>Integration von KI in Führungsinstrumente: KPIs, Zielvereinbarungen, Führungskräfte-Reviews. Sicherstellung, dass KI-Ziele auf allen Ebenen verfolgt und gemessen werden.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-12)">Das KI Operating Model</h2>
+          <div class="op-model">
+            <div class="op-layer op-layer-strategy">
+              <span class="op-layer-label">Strategie & Steuerung</span>
+              <p>KI-Steering Committee, Executive Sponsorship, KI-Strategie-Review</p>
+            </div>
+            <div class="op-layer op-layer-center">
+              <span class="op-layer-label">KI Center of Excellence</span>
+              <p>Methodik, Standards, Wissensmanagement, Use Case Steuerung</p>
+            </div>
+            <div class="op-layer op-layer-field">
+              <span class="op-layer-label">KI-Champions in den Fachbereichen</span>
+              <p>Lokale Anwendung, Feedback, Adoption, Praxis-Wissen</p>
+            </div>
+            <div class="op-layer op-layer-tech">
+              <span class="op-layer-label">IT &amp; Daten-Infrastruktur</span>
+              <p>Plattformen, Datenqualität, Security, Integration</p>
+            </div>
+          </div>
+        </div>
+        <div class="module-sidebar">
+          <div class="sidebar-card">
+            <h4>Eckdaten</h4>
+            <dl class="sidebar-dl">
+              <dt>Investition</dt><dd>80.000 – 180.000 €</dd>
+              <dt>Laufzeit</dt><dd>3 – 6 Monate</dd>
+              <dt>Teamgröße</dt><dd>3 Berater + PMO</dd>
+              <dt>Deliverables</dt><dd>Betriebsmodell, KI-Playbook, CoE-Design, Multiplikatoren-Programm</dd>
+            </dl>
+          </div>
+          <div class="sidebar-card sidebar-card-primary">
+            <h4>Langfristige Wirkung</h4>
+            <ul class="sidebar-results">
+              <li>KI als fester Bestandteil der Unternehmenskultur</li>
+              <li>Unabhängigkeit vom externen Berater</li>
+              <li>Kontinuierliche Innovationsfähigkeit</li>
+              <li>Messbare KPI-Verbesserungen im Regelbetrieb</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="showView('contact')">Modul anfragen</button>
+          <button class="btn btn-outline btn-full" onclick="showView('home')">Zurück zur Übersicht</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== VIEW: TEAM ===== -->
+  <main id="view-team" class="view">
+    <div class="page-hero">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <p class="section-eyebrow">Ihre Ansprechpartner</p>
+        <h1 class="page-hero-title">Wir verstehen die Region und die Bedürfnisse der Kunden</h1>
+        <p class="page-hero-sub">Zwei erfahrene Assistant Manager mit komplementären Expertisen — für eine ganzheitliche KI-Transformation Ihres Unternehmens.</p>
+      </div>
+    </div>
+    <div class="container team-content">
+      <div class="team-grid">
+        <!-- Jonas -->
+        <div class="team-card">
+          <div class="team-photo-wrap">
+            <div class="team-photo-placeholder team-photo-jonas">
+              <svg viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="45" r="28" fill="var(--color-primary)" opacity="0.18"/>
+                <circle cx="60" cy="45" r="20" fill="var(--color-primary)" opacity="0.32"/>
+                <text x="60" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="var(--color-primary)" font-family="Arial, Helvetica, sans-serif">JB</text>
+                <path d="M20 110 Q60 85 100 110" fill="var(--color-primary)" opacity="0.1"/>
+              </svg>
+            </div>
+            <div class="team-network-bg"></div>
+          </div>
+          <div class="team-info">
+            <h2 class="team-name">Jonas Beckmann</h2>
+            <p class="team-role">Assistant Manager | AI Transformation &amp; Process Optimization</p>
+            <ul class="team-skills">
+              <li>Datenbasierte Prozesstransparenz</li>
+              <li>Identifikation belastbarer KI-Use-Cases</li>
+              <li>Wirksamkeits-KPIs (Durchlaufzeit, Automation, ROI)</li>
+              <li>Technische Anschlussfähigkeit (SAP, Microsoft, Google)</li>
+              <li>Skalierbares Methoden-Set</li>
+            </ul>
+            <div class="team-modules">
+              <span class="team-module-tag" onclick="showView('module1')">Modul 1</span>
+              <span class="team-module-tag" onclick="showView('module3')">Modul 3</span>
+            </div>
+            <button class="btn btn-outline" onclick="showView('contact')">Kontakt aufnehmen</button>
+          </div>
+        </div>
+
+        <!-- Emma -->
+        <div class="team-card">
+          <div class="team-photo-wrap">
+            <div class="team-photo-placeholder team-photo-emma">
+              <svg viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="45" r="28" fill="var(--color-accent2)" opacity="0.18"/>
+                <circle cx="60" cy="45" r="20" fill="var(--color-accent2)" opacity="0.32"/>
+                <text x="60" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="var(--color-accent2)" font-family="Arial, Helvetica, sans-serif">EW</text>
+                <path d="M20 110 Q60 85 100 110" fill="var(--color-accent2)" opacity="0.1"/>
+              </svg>
+            </div>
+            <div class="team-network-bg"></div>
+          </div>
+          <div class="team-info">
+            <h2 class="team-name">Emma Wissmann</h2>
+            <p class="team-role">Assistant Manager | AI Program Management &amp; Change Enablement</p>
+            <ul class="team-skills">
+              <li>KI-Befähigung, Kommunikation</li>
+              <li>KI-Kultur &amp; Awareness-Formate</li>
+              <li>Governance- &amp; Rollenmodelle (EU AI Act-fähig)</li>
+              <li>Multiplikatoren- &amp; Trainingsdesign</li>
+              <li>Verankerung in Linie und Führung</li>
+            </ul>
+            <div class="team-modules">
+              <span class="team-module-tag" onclick="showView('module2')">Modul 2</span>
+              <span class="team-module-tag" onclick="showView('module4')">Modul 4</span>
+            </div>
+            <button class="btn btn-outline" onclick="showView('contact')">Kontakt aufnehmen</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemeinsam -->
+      <div class="team-together">
+        <h2>Gemeinsam für Ihre KI-Transformation</h2>
+        <p>Jonas und Emma bringen komplementäre Expertisen in jedes Projekt: technische Substanz trifft Change Management, Prozessexzellenz trifft Organisationsentwicklung. Beide sind Ansprechpartner für das gesamte Portfolio.</p>
+        <button class="btn btn-primary" onclick="showView('contact')">Gespräch vereinbaren</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== VIEW: CONTACT ===== -->
+  <main id="view-contact" class="view">
+    <div class="page-hero">
+      <div class="container">
+        <button class="back-btn" onclick="showView('home')">← Zur Übersicht</button>
+        <p class="section-eyebrow">Kontakt</p>
+        <h1 class="page-hero-title">Starten Sie Ihre KI-Transformation</h1>
+        <p class="page-hero-sub">Vereinbaren Sie ein unverbindliches Erstgespräch. Wir melden uns innerhalb von 24 Stunden.</p>
+      </div>
+    </div>
+    <div class="container contact-content">
+      <div class="contact-grid">
+        <div class="contact-form-wrap">
+          <form class="contact-form" onsubmit="handleFormSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Vorname *</label>
+                <input type="text" id="fname" placeholder="Max" required />
+              </div>
+              <div class="form-group">
+                <label for="lname">Nachname *</label>
+                <input type="text" id="lname" placeholder="Mustermann" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company">Unternehmen *</label>
+              <input type="text" id="company" placeholder="Muster GmbH" required />
+            </div>
+            <div class="form-group">
+              <label for="email">E-Mail *</label>
+              <input type="email" id="email" placeholder="max@muster.de" required />
+            </div>
+            <div class="form-group">
+              <label for="module">Interessiertes Modul</label>
+              <select id="module">
+                <option value="">Bitte auswählen</option>
+                <option value="m1">Modul 1 – KI-Mehrwert &amp; Use Cases</option>
+                <option value="m2">Modul 2 – KI-Kultur &amp; Awareness</option>
+                <option value="m3">Modul 3 – KI-Governance</option>
+                <option value="m4">Modul 4 – Organisationsmodell &amp; Verstetigung</option>
+                <option value="bundle">Full Journey Bundle (Modul 1–4)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Ihre Nachricht</label>
+              <textarea id="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full btn-lg">Nachricht senden</button>
+          </form>
+          <div class="form-success" id="formSuccess" style="display:none">
+            <div class="success-icon">✓</div>
+            <h3>Vielen Dank!</h3>
+            <p>Ihre Nachricht wurde gesendet. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+            <button class="btn btn-outline" onclick="showView('home')">Zurück zur Übersicht</button>
+          </div>
+        </div>
+        <div class="contact-info">
+          <div class="contact-person">
+            <div class="contact-avatar">JB</div>
+            <div>
+              <strong>Jonas Beckmann</strong>
+              <p>AI Transformation &amp; Process Optimization</p>
+              <a href="mailto:jonas.beckmann@beratung.de">jonas.beckmann@beratung.de</a>
+            </div>
+          </div>
+          <div class="contact-person">
+            <div class="contact-avatar contact-avatar-2">EW</div>
+            <div>
+              <strong>Emma Wissmann</strong>
+              <p>AI Program Management &amp; Change Enablement</p>
+              <a href="mailto:emma.wissmann@beratung.de">emma.wissmann@beratung.de</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Nordrhein-Westfalen, Deutschland</span>
+          </div>
+          <div class="contact-detail">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Antwort innerhalb von 24 Stunden</span>
+          </div>
+          <div class="contact-modules-preview">
+            <p class="contact-module-head">Unsere Module</p>
+            <div class="contact-module-list">
+              <span onclick="showView('module1')">01 KI-Mehrwert</span>
+              <span onclick="showView('module2')">02 KI-Kultur</span>
+              <span onclick="showView('module3')">03 KI-Governance</span>
+              <span onclick="showView('module4')">04 Verstetigung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <svg width="36" height="28" viewBox="0 0 40 32" fill="none">
+          <rect width="40" height="32" rx="2" fill="#0091da"/>
+          <text x="20" y="22" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="15">KI</text>
+        </svg>
+        <span>KI<span class="footer-brand-accent">Beratung</span></span>
+      </div>
+      <div class="footer-links">
+        <button onclick="showView('home')">Übersicht</button>
+        <button onclick="showView('team')">Team</button>
+        <button onclick="showView('contact')">Kontakt</button>
+      </div>
+      <p class="footer-copy">© 2025 KI-Beratung. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
