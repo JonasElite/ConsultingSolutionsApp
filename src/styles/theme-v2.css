@@ -432,6 +432,20 @@ body {
 }
 .bundle-banner .bundle-inner { position: relative; z-index: 1; }
 
+/* ---------- Module hero parallax glow ---------- */
+.module-hero-glow {
+  position: absolute;
+  top: -35%;
+  right: -10%;
+  width: 40rem;
+  height: 40rem;
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--cyan) 18%, transparent), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+.module-hero .container { position: relative; z-index: 1; }
+
 /* ---------- CTA: slow gradient motion ---------- */
 .cta-glow {
   position: absolute;

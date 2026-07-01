@@ -1,14 +1,14 @@
 <div class="page-hero">
       <div class="container">
-        <button class="back-btn" data-link="/">← Zur Übersicht</button>
-        <p class="section-eyebrow">Kontakt</p>
-        <h1 class="page-hero-title">Starten Sie Ihre KI-Transformation</h1>
-        <p class="page-hero-sub">Vereinbaren Sie ein unverbindliches Erstgespräch. Wir melden uns innerhalb von 24 Stunden.</p>
+        <button class="back-btn" data-hero-in data-link="/">← Zur Übersicht</button>
+        <p class="section-eyebrow" data-hero-in>Kontakt</p>
+        <h1 class="page-hero-title" data-hero-in>Starten Sie Ihre KI-Transformation</h1>
+        <p class="page-hero-sub" data-hero-in>Vereinbaren Sie ein unverbindliches Erstgespräch. Wir melden uns innerhalb von 24 Stunden.</p>
       </div>
     </div>
     <div class="container contact-content">
       <div class="contact-grid">
-        <div class="contact-form-wrap">
+        <div class="contact-form-wrap" data-reveal="up">
           <!-- Really submits: set data-endpoint to a Formspree/Web3Forms URL to
                collect messages server-side; without it, a pre-filled e-mail opens. -->
           <form class="contact-form" data-mailto="jonas.beckmann@beratung.de">
@@ -45,7 +45,7 @@
               <label for="message">Ihre Nachricht</label>
               <textarea id="message" name="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-full btn-lg">Nachricht senden</button>
+            <button type="submit" class="btn btn-primary btn-full btn-lg" data-magnetic="0.2">Nachricht senden</button>
             <p class="form-note">Wir behandeln Ihre Angaben vertraulich und melden uns innerhalb von 24 Stunden.</p>
           </form>
           <div class="form-success" id="formSuccess" style="display:none">
@@ -55,7 +55,7 @@
             <button class="btn btn-outline" data-link="/">Zurück zur Übersicht</button>
           </div>
         </div>
-        <div class="contact-info">
+        <div class="contact-info" data-reveal="up">
           <div class="contact-person">
             <div class="contact-avatar">JB</div>
             <div>
