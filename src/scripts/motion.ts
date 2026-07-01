@@ -4,7 +4,6 @@
    for reduced-motion and touch/mobile. Purpose-built, reusable
    helpers that the sections call — no effects run on their own.
    ============================================================ */
-import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -12,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const coarsePointer = matchMedia('(hover: none)').matches;
-const isMobile = coarsePointer || window.innerWidth < 768;
 
 // Signal that the engine loaded, so the head fallback keeps content hidden
 // (rather than force-revealing) — see BaseLayout inline script.
@@ -25,24 +23,12 @@ const D = {
   stagger: 0.06,
 };
 
-/* ---------- Smooth scroll (Lenis) ---------- */
-let lenis: Lenis | null = null;
-
-export function initSmoothScroll(): Lenis | null {
-  // Native scrolling is better on touch; smooth scroll is desktop-only.
-  if (reducedMotion || isMobile || lenis) return lenis;
-
-  lenis = new Lenis({ lerp: 0.11, smoothWheel: true });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis?.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-  return lenis;
-}
-
-/** Reset scroll to top after a client-side navigation. */
-export function scrollTop(): void {
-  if (lenis) lenis.scrollTo(0, { immediate: true });
-  else window.scrollTo(0, 0);
+/* ---------- Lenis ↔ ScrollTrigger bridge ----------
+   The Lenis instance lives in smoothscroll.ts (loaded site-wide without
+   GSAP). On animated pages we forward its virtual scroll to ScrollTrigger. */
+export function connectLenis(lenis: { on: (e: 'scroll', cb: () => void) => void } | null): void {
+  if (!lenis) return;
+  lenis.on('scroll', () => ScrollTrigger.update());
 }
 
 /** Kill ScrollTriggers whose element left the DOM (after a swap), then refresh. */

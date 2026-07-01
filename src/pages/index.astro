@@ -7,8 +7,11 @@ import body from '../fragments/home.html?raw';
 </BaseLayout>
 
 <script>
-  import { gsap, splitWords, revealText, magnetic, revealOnScroll, parallax, reducedMotion } from '../scripts/motion';
+  import { gsap, splitWords, revealText, magnetic, revealOnScroll, parallax, connectLenis, refreshTriggers, reducedMotion } from '../scripts/motion';
+  import { getLenis } from '../scripts/smoothscroll';
   import { initNeural } from '../scripts/neural';
+
+  let lenisConnected = false;
 
   function initHero() {
     const hero = document.querySelector<HTMLElement>('.hero');
@@ -91,6 +94,10 @@ import body from '../fragments/home.html?raw';
   }
 
   function initHome() {
+    if (!lenisConnected) {
+      connectLenis(getLenis()); // forward Lenis scroll to ScrollTrigger (once)
+      lenisConnected = true;
+    }
     initHero();
     initJourney(); // reserves journey steps before the page-wide reveal runs
     document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
@@ -98,6 +105,7 @@ import body from '../fragments/home.html?raw';
     magnetic(document); // magnetic buttons beyond the hero
     parallax(document); // bundle-banner glow depth
     initNetwork();
+    refreshTriggers(); // recalc after the DOM is in place (also after view swaps)
   }
 
   document.addEventListener('astro:page-load', initHome);

@@ -76,13 +76,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <Footer />
 
     <script>
+      // Site-wide: UI + smooth scroll only (no GSAP — that loads per animated page).
       import '../scripts/ui.ts';
-      import { initSmoothScroll, scrollTop, refreshTriggers } from '../scripts/motion';
+      import { initSmoothScroll, scrollTop } from '../scripts/smoothscroll';
 
       initSmoothScroll();
-      // After a client navigation: jump to top, drop stale triggers, recalc.
       document.addEventListener('astro:after-swap', scrollTop);
-      document.addEventListener('astro:page-load', refreshTriggers);
     </script>
   </body>
 </html>

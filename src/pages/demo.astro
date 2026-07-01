@@ -209,7 +209,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </style>
 
 <script>
-  import { revealText, revealOnScroll, parallax, magnetic, countUp, gsap, reducedMotion } from '../scripts/motion';
+  import { revealText, revealOnScroll, parallax, magnetic, countUp, gsap, connectLenis, refreshTriggers, reducedMotion } from '../scripts/motion';
+  import { getLenis } from '../scripts/smoothscroll';
+
+  let lenisConnected = false;
 
   function setupPin() {
     const stage = document.querySelector<HTMLElement>('#demo-pin');
@@ -240,12 +243,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   function setup() {
     if (!document.getElementById('demo-root')) return; // only on this page
+    if (!lenisConnected) {
+      connectLenis(getLenis());
+      lenisConnected = true;
+    }
     document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
     revealOnScroll();
     parallax();
     magnetic();
     countUp();
     setupPin();
+    refreshTriggers();
   }
 
   document.addEventListener('astro:page-load', setup);
