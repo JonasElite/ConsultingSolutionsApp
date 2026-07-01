@@ -7,7 +7,7 @@ import body from '../fragments/home.html?raw';
 </BaseLayout>
 
 <script>
-  import { gsap, splitWords, magnetic, revealOnScroll, parallax, reducedMotion } from '../scripts/motion';
+  import { gsap, splitWords, revealText, magnetic, revealOnScroll, parallax, reducedMotion } from '../scripts/motion';
   import { initNeural } from '../scripts/neural';
 
   function initHero() {
@@ -64,11 +64,37 @@ import body from '../fragments/home.html?raw';
       );
   }
 
+  function initNetwork() {
+    const svg = document.querySelector<SVGSVGElement>('.network-svg');
+    if (!svg || svg.dataset.anim) return;
+    svg.dataset.anim = '1';
+    if (reducedMotion) return; // drawn statically as authored
+
+    const lines = Array.from(svg.querySelectorAll<SVGLineElement>('line'));
+    const circles = Array.from(svg.querySelectorAll<SVGCircleElement>('circle'));
+    const texts = Array.from(svg.querySelectorAll<SVGTextElement>('text'));
+
+    // Prepare each connector for a stroke "draw".
+    lines.forEach((l) => {
+      const len = l.getTotalLength();
+      gsap.set(l, { strokeDasharray: len, strokeDashoffset: len });
+    });
+
+    gsap
+      .timeline({ scrollTrigger: { trigger: svg, start: 'top 80%', once: true } })
+      .from(circles, { scale: 0, transformOrigin: 'center', duration: 0.5, ease: 'back.out(2)', stagger: 0.03 })
+      .to(lines, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out', stagger: 0.02 }, '-=0.25')
+      .from(texts, { autoAlpha: 0, y: 4, duration: 0.4, stagger: 0.04 }, '-=0.4');
+  }
+
   function initHome() {
     initHero();
     initJourney(); // reserves journey steps before the page-wide reveal runs
-    revealOnScroll(document); // section headers etc. (skips reserved elements)
+    document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
+    revealOnScroll(document); // section headers, lists etc. (skips reserved elements)
+    magnetic(document); // magnetic buttons beyond the hero
     parallax(document); // bundle-banner glow depth
+    initNetwork();
   }
 
   document.addEventListener('astro:page-load', initHome);
