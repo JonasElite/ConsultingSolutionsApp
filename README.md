@@ -25,15 +25,17 @@ kanonische URLs und ein base-path-fähiges Routing (funktioniert an der Domain-W
 
 ```
 src/
-  layouts/BaseLayout.astro   # <head>, Theme-Init, Nav, Footer, UI-Skript
+  layouts/BaseLayout.astro   # <head>, SEO/OG, Fonts (display: optional), Theme-Init
   components/Nav.astro        # Navigation mit Active-State
   components/Footer.astro
+  components/TeamCard.astro   # Team-Karte mit optimiertem Foto + Initialen-Fallback
+  assets/team/                # Porträtfotos (jonas.png, emma.png) für astro:assets
   pages/                      # eine .astro-Datei pro Route
     index.astro  modul-1.astro … modul-4.astro  team.astro  kontakt.astro
   fragments/                  # migrierter Seiteninhalt (via ?raw eingebunden)
   scripts/ui.ts               # Theme, Mobile-Nav, Router, Scroll-Reveal, Formular
   styles/global.css           # Design-System + Modernisierungs-Layer
-public/favicon.svg
+public/favicon.svg  public/og.png
 astro.config.mjs
 ```
 
@@ -92,6 +94,22 @@ die CSS-Variablen (Design-Tokens) am Anfang von `src/styles/global.css` gesteuer
 Der futuristische „Neural Enterprise"-Look (Glas-Oberflächen, Cyan-Glow, Mono-Labels,
 Journey-Stepper) liegt in `src/styles/theme-v2.css` und wird nach `global.css` geladen.
 
+### Team-Fotos
+
+Die Porträts von Jonas und Emma liegen unter `src/assets/team/{jonas,emma}.png`
+und werden zur Build-Zeit von `astro:assets` optimiert (AVIF + WebP, responsives
+`srcset`, Lazy-Loading, feste Dimensionen → CLS = 0). Zum Austauschen einfach die
+Dateien ersetzen (Porträt ~4:5, ideal ≥ 800×1000 px) und neu bauen. Fehlt eine
+Datei, fällt die Team-Karte automatisch auf den Initialen-Platzhalter zurück,
+und die Kontaktseite behält ihre Initialen-Avatare.
+
+### ⚠️ Platzhalter-Kontaktdaten
+
+Die E-Mail-Adressen (`*@beratung.de`) und die Ortsangabe („Nordrhein-Westfalen")
+auf der Kontaktseite sind **Beispieldaten** und in `src/fragments/kontakt.html`
+entsprechend kommentiert. Vor dem Go-Live durch echte Daten ersetzen (Suchbegriff:
+`PLATZHALTER`).
+
 ### Kontaktformular aktivieren
 
 Das Formular auf `/kontakt` funktioniert sofort: Ohne Backend öffnet es eine
@@ -101,3 +119,12 @@ Formular-Dienst eintragen — z. B. [Formspree](https://formspree.io) oder
 [Web3Forms](https://web3forms.com) — indem am `<form>` das Attribut
 `data-endpoint="https://…"` ergänzt wird. Dann werden die Felder per `fetch`
 dorthin gesendet (Fallback auf die E-Mail-Variante bleibt erhalten).
+
+## Performance & Barrierefreiheit
+
+Zuletzt gemessen (Lighthouse 12, Mobile-Emulation, Production-Build):
+alle Seiten **Performance 99–100, Accessibility 100, Best Practices 100,
+SEO 100**, CLS = 0. Dazu tragen bei: self-hosted Fonts mit
+`font-display: optional` + Preload (kein Font-Swap-CLS), code-gesplittetes
+Motion-JS (GSAP lädt nur auf Hover-Geräten bzw. animierten Seiten), optimierte
+Bilder und `prefers-reduced-motion`-Abschaltung aller Animationen.

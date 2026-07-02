@@ -1,0 +1,88 @@
+---
+/* Team-Karte mit optimiertem Porträtfoto (astro:assets).
+   Fällt automatisch auf den Initialen-Platzhalter zurück, wenn kein
+   Bild übergeben wird — Layout und Animationen (Reveal in ui.ts,
+   Spotlight via --mx/--my) bleiben in beiden Fällen identisch. */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface ModuleTag {
+  label: string;
+  route: string;
+}
+
+interface Props {
+  name: string;
+  role: string;
+  initials: string;
+  /** CSS-Farb-Variable für den Platzhalter, z. B. "--color-primary" */
+  accentVar?: string;
+  photo?: ImageMetadata;
+  photoAlt?: string;
+  skills: string[];
+  modules: ModuleTag[];
+}
+
+const {
+  name,
+  role,
+  initials,
+  accentVar = '--color-primary',
+  photo,
+  photoAlt = `Porträtfoto von ${name}`,
+  skills,
+  modules,
+} = Astro.props;
+---
+
+<div class="team-card">
+  <div class="team-photo-wrap">
+    {
+      photo ? (
+        <Picture
+          class="team-photo"
+          src={photo}
+          alt={photoAlt}
+          widths={[280, 380, photo.width]}
+          sizes="(max-width: 900px) calc(100vw - 3rem), 540px"
+          formats={['avif']}
+          fallbackFormat="webp"
+          quality="high"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="team-photo-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="45" r="28" fill={`var(${accentVar})`} opacity="0.18" />
+            <circle cx="60" cy="45" r="20" fill={`var(${accentVar})`} opacity="0.32" />
+            <text
+              x="60"
+              y="52"
+              text-anchor="middle"
+              font-size="20"
+              font-weight="700"
+              fill={`var(${accentVar})`}
+              font-family="Arial, Helvetica, sans-serif"
+            >
+              {initials}
+            </text>
+            <path d="M20 110 Q60 85 100 110" fill={`var(${accentVar})`} opacity="0.1" />
+          </svg>
+        </div>
+      )
+    }
+    <div class="team-network-bg" aria-hidden="true"></div>
+  </div>
+  <div class="team-info">
+    <h2 class="team-name">{name}</h2>
+    <p class="team-role" set:html={role} />
+    <ul class="team-skills">
+      {skills.map((skill) => <li>{skill}</li>)}
+    </ul>
+    <div class="team-modules">
+      {modules.map((m) => <span class="team-module-tag" data-link={m.route}>{m.label}</span>)}
+    </div>
+    <button class="btn btn-outline" data-link="/kontakt" data-magnetic="0.2">Kontakt aufnehmen</button>
+  </div>
+</div>

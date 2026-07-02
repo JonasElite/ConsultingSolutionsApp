@@ -59,9 +59,14 @@ function augmentDataLinkA11y(): void {
 
 /* ---------- Mobile navigation (one-time, delegated) ---------- */
 function bindMobileNav(): void {
+  const syncExpanded = () => {
+    const burger = document.getElementById('navHamburger');
+    burger?.setAttribute('aria-expanded', String(burger.classList.contains('open')));
+  };
   const close = () => {
     document.getElementById('navMobile')?.classList.remove('open');
     document.getElementById('navHamburger')?.classList.remove('open');
+    syncExpanded();
   };
 
   document.addEventListener('click', (e) => {
@@ -70,6 +75,7 @@ function bindMobileNav(): void {
       e.stopPropagation();
       document.getElementById('navMobile')?.classList.toggle('open');
       document.getElementById('navHamburger')?.classList.toggle('open');
+      syncExpanded();
       return;
     }
     if (t.closest('#navMobile a, #navMobile button')) return close();
@@ -125,13 +131,10 @@ function bindThemeToggle(): void {
   });
 }
 
-/* ---------- Nav border on scroll (one-time) ---------- */
+/* ---------- Nav border on scroll (one-time) ----------
+   Nur eine Klasse togglen — die Farbe regelt das CSS je Theme. */
 function navBorderUpdate(): void {
-  const nav = document.getElementById('mainNav');
-  if (nav) {
-    nav.style.borderBottomColor =
-      window.scrollY > 10 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
-  }
+  document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 10);
 }
 
 /* ---------- Scroll progress bar (one-time) ---------- */

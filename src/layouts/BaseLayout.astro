@@ -2,9 +2,12 @@
 import { ViewTransitions } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-// Self-hosted variable fonts (no external requests, no render-blocking).
-import '@fontsource-variable/space-grotesk';
-import '@fontsource-variable/jetbrains-mono';
+/* Self-hosted variable fonts: statt der Fontsource-CSS (font-display: swap)
+   deklarieren wir die @font-face-Regeln selbst mit `font-display: optional`.
+   Zusammen mit dem Preload unten lädt die Schrift fast immer rechtzeitig —
+   und wenn nicht, wird NIE nachträglich getauscht → Font-Swap-CLS = 0. */
+import spaceGroteskWoff2 from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import jetbrainsMonoWoff2 from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import '../styles/theme-v2.css';
 import '../styles/motion.css';
@@ -12,15 +15,53 @@ import '../styles/motion.css';
 interface Props {
   title?: string;
   description?: string;
+  /** Seite aus Suchmaschinen heraushalten (z. B. /demo). */
+  noindex?: boolean;
 }
 
 const {
   title = 'KI-Transformation | Beratungsportfolio',
   description = 'Ihr Partner für KI-Transformation im Mittelstand. Modulares Beratungsportfolio von der Strategie bis zur Verankerung.',
+  noindex = false,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}og.png`.replace('//', '/'), Astro.site).href;
+
+// Latin deckt Deutsch vollständig ab (Umlaute, ß, –, €).
+const LATIN =
+  'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD';
+const fontFaceCss = `
+@font-face {
+  font-family: 'Space Grotesk Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 300 700;
+  src: url(${spaceGroteskWoff2}) format('woff2-variations');
+  unicode-range: ${LATIN};
+}
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 100 800;
+  src: url(${jetbrainsMonoWoff2}) format('woff2-variations');
+  unicode-range: ${LATIN};
+}`;
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'KI-Beratung',
+  description,
+  url: Astro.site?.href,
+  areaServed: 'Nordrhein-Westfalen, Deutschland',
+  employee: [
+    { '@type': 'Person', name: 'Jonas Beckmann', jobTitle: 'Assistant Manager, AI Transformation & Process Optimization' },
+    { '@type': 'Person', name: 'Emma Wissmann', jobTitle: 'Assistant Manager, AI Program Management & Change Enablement' },
+  ],
+});
 ---
 
 <!DOCTYPE html>
@@ -31,14 +72,32 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+
+    <!-- Fonts: preload + @font-face mit font-display: optional (CLS = 0) -->
+    <link rel="preload" as="font" type="font/woff2" href={spaceGroteskWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={jetbrainsMonoWoff2} crossorigin />
+    <Fragment set:html={`<style>${fontFaceCss}</style>`} />
 
     <!-- Open Graph / social -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="KI-Beratung" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#00338d" />
+
+    <!-- Strukturierte Daten -->
+    <Fragment set:html={`<script type="application/ld+json">${jsonLd}</script>`} />
 
     <!-- Soft cross-document transitions between routes -->
     <ViewTransitions />
@@ -57,7 +116,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
           html.setAttribute('data-theme', 'light');
         }
         try {
-          if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          // Entrance-Choreografien nur auf Hover-Geräten (Desktop):
+          // Mobile/Touch zeigt Inhalte sofort statisch (harte Regel:
+          // aufwendige Animationen dort reduzieren) — und reduced-motion
+          // schaltet ohnehin alles ab.
+          if (
+            !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            matchMedia('(hover: hover)').matches
+          ) {
             html.classList.add('motion-ready');
             // Safety net: if the motion engine never boots, reveal everything.
             setTimeout(() => {

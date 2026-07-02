@@ -1,12 +1,79 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import body from '../fragments/team.html?raw';
+import TeamCard from '../components/TeamCard.astro';
+import type { ImageMetadata } from 'astro';
+
+/* Fotos werden erwartet unter src/assets/team/{jonas,emma}.png (Porträt ~4:5).
+   Fehlt eine Datei, rendert die TeamCard automatisch den Initialen-Platzhalter. */
+const teamImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/team/*.{png,jpg,jpeg,webp}',
+  { eager: true },
+);
+const photoOf = (stem: string): ImageMetadata | undefined =>
+  Object.entries(teamImages).find(([path]) => path.includes(`/${stem}.`))?.[1]?.default;
 ---
 <BaseLayout
   title="Team | KI-Beratung"
   description="Zwei erfahrene Assistant Manager mit komplementären Expertisen für eine ganzheitliche KI-Transformation Ihres Unternehmens."
 >
-  <main set:html={body}></main>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <button class="back-btn" data-hero-in data-link="/">← Zur Übersicht</button>
+        <p class="section-eyebrow" data-hero-in>Ihre Ansprechpartner</p>
+        <h1 class="page-hero-title" data-hero-in>Zwei Perspektiven, ein Ziel: Ihre KI-fähige Organisation</h1>
+        <p class="page-hero-sub" data-hero-in>Zwei erfahrene Assistant Manager mit komplementären Expertisen — für eine ganzheitliche KI-Transformation Ihres Unternehmens.</p>
+      </div>
+    </div>
+    <div class="container team-content">
+      <div class="team-grid">
+        <TeamCard
+          name="Jonas Beckmann"
+          role="Assistant Manager | AI Transformation &amp; Process Optimization"
+          initials="JB"
+          accentVar="--color-primary"
+          photo={photoOf('jonas')}
+          photoAlt="Porträtfoto von Jonas Beckmann, Assistant Manager für AI Transformation und Process Optimization"
+          skills={[
+            'Datenbasierte Prozesstransparenz',
+            'Identifikation belastbarer KI-Use-Cases',
+            'Wirksamkeits-KPIs (Durchlaufzeit, Automation, ROI)',
+            'Technische Anschlussfähigkeit (SAP, Microsoft, Google)',
+            'Skalierbares Methoden-Set',
+          ]}
+          modules={[
+            { label: 'Modul 1', route: '/modul-1' },
+            { label: 'Modul 3', route: '/modul-3' },
+          ]}
+        />
+        <TeamCard
+          name="Emma Wissmann"
+          role="Assistant Manager | AI Program Management &amp; Change Enablement"
+          initials="EW"
+          accentVar="--color-accent2"
+          photo={photoOf('emma')}
+          photoAlt="Porträtfoto von Emma Wissmann, Assistant Manager für AI Program Management und Change Enablement"
+          skills={[
+            'KI-Befähigung, Kommunikation',
+            'KI-Kultur & Awareness-Formate',
+            'Governance- & Rollenmodelle (EU AI Act-fähig)',
+            'Multiplikatoren- & Trainingsdesign',
+            'Verankerung in Linie und Führung',
+          ]}
+          modules={[
+            { label: 'Modul 2', route: '/modul-2' },
+            { label: 'Modul 4', route: '/modul-4' },
+          ]}
+        />
+      </div>
+
+      <div class="team-together">
+        <h2>Gemeinsam für Ihre KI-Transformation</h2>
+        <p>Jonas und Emma bringen komplementäre Expertisen in jedes Projekt: technische Substanz trifft Change Management, Prozessexzellenz trifft Organisationsentwicklung. Beide sind Ansprechpartner für das gesamte Portfolio.</p>
+        <button class="btn btn-primary" data-link="/kontakt" data-magnetic="0.2">Gespräch vereinbaren</button>
+      </div>
+    </div>
+  </main>
 </BaseLayout>
 
 <script>

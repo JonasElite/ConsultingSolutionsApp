@@ -591,15 +591,6 @@ main { padding-top: 64px; }
   100% { background-position: 64px 64px; }
 }
 
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
 @keyframes floatOrb {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(20px, -30px) scale(1.08); }
@@ -718,7 +709,7 @@ main { padding-top: 64px; }
 .stat-label {
   font-family: var(--font-display);
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.72); /* WCAG AA auf Navy */
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 500;
@@ -791,43 +782,12 @@ main { padding-top: 64px; }
   overflow: hidden;
 }
 
-.module-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, transparent 40%, var(--color-accent2) 50%, transparent 60%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.module-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(0, 145, 218, 0.2) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
+/* Hover-Hairline und -Spotlight der Karten liegen in theme-v2.css
+   (::before/::after) — hier nur der Basiszustand. */
 .module-card:hover {
   box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 145, 218, 0.18);
   transform: translateY(-4px);
-  border-color: var(--color-border);
-  border-top-color: var(--color-accent2);
 }
-
-.module-card:hover::before { opacity: 1; }
-.module-card:hover::after { opacity: 1; }
 
 .module-card-header {
   display: flex;
@@ -1148,7 +1108,7 @@ main { padding-top: 64px; }
   gap: var(--space-2);
   font-size: var(--text-sm);
   font-weight: 600;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.78); /* WCAG AA auf Navy */
   margin-bottom: var(--space-8);
   padding: var(--space-2) 0;
   transition: color var(--transition);
@@ -1282,7 +1242,7 @@ main { padding-top: 64px; }
   justify-content: center;
 }
 
-.deliverable-item h4 {
+.deliverable-item h3 {
   font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 700;
@@ -1339,7 +1299,7 @@ main { padding-top: 64px; }
   z-index: 1;
 }
 
-.step-content h4 {
+.step-content h3 {
   font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 700;
@@ -1369,7 +1329,7 @@ main { padding-top: 64px; }
   padding: var(--space-6);
 }
 
-.sidebar-card h4 {
+.sidebar-card h3 {
   font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 700;
@@ -1384,7 +1344,7 @@ main { padding-top: 64px; }
   border-color: var(--color-primary);
 }
 
-.sidebar-card-primary h4 {
+.sidebar-card-primary h3 {
   color: var(--color-primary);
   border-color: rgba(0, 51, 141, 0.2);
 }
@@ -1463,8 +1423,9 @@ main { padding-top: 64px; }
   padding: var(--space-6);
 }
 
-.format-card h4 {
+.format-card h3 {
   font-family: var(--font-display);
+  font-size: var(--text-base); /* h4→h3-Umstellung (A11y): Optik unverändert */
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: var(--space-2);
@@ -1648,7 +1609,8 @@ main { padding-top: 64px; }
 }
 
 .team-photo-wrap {
-  height: 220px;
+  /* Feste Höhe → keine Layout-Verschiebung, egal ob Foto oder Platzhalter (CLS = 0). */
+  height: 300px;
   background: linear-gradient(135deg, var(--color-primary-highlight), var(--color-surface-offset));
   display: flex;
   align-items: center;
@@ -1664,11 +1626,33 @@ main { padding-top: 64px; }
   z-index: 2;
 }
 
+/* Echtes Porträtfoto (astro:assets <Picture>): füllt den Wrap ohne Verzerrung. */
+.team-photo,
+.team-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+}
+
+img.team-photo,
+.team-photo img {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.team-card:hover img.team-photo,
+.team-card:hover .team-photo img {
+  transform: scale(1.04);
+}
+
 .team-network-bg {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(circle at 30% 40%, rgba(0, 51, 141, 0.18) 0%, transparent 60%),
     radial-gradient(circle at 70% 60%, rgba(0, 145, 218, 0.14) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .team-info {
@@ -1913,6 +1897,13 @@ main { padding-top: 64px; }
   background: var(--color-accent2);
 }
 
+/* Foto-Variante des Avatars (Build-Zeit-Ersetzung in kontakt.astro). */
+img.contact-avatar {
+  object-fit: cover;
+  object-position: 50% 20%;
+  border: 1px solid var(--color-border);
+}
+
 .contact-person strong {
   display: block;
   font-family: var(--font-display);
@@ -2035,7 +2026,7 @@ main { padding-top: 64px; }
 
 .footer-copy {
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.66); /* WCAG AA auf Navy */
   max-width: none;
 }
 
@@ -2079,22 +2070,11 @@ main { padding-top: 64px; }
 /* ============================================================
    ANIMATIONS
    ============================================================ */
+/* fadeInUp wird vom Formular-Success-State (ui.ts) genutzt. */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-.view.active .module-card,
-.view.active .deliverable-item,
-.view.active .team-card {
-  animation: fadeInUp 0.5s ease both;
-}
-
-.view.active .module-card:nth-child(1) { animation-delay: 0.05s; }
-.view.active .module-card:nth-child(2) { animation-delay: 0.1s; }
-.view.active .module-card:nth-child(3) { animation-delay: 0.15s; }
-.view.active .module-card:nth-child(4) { animation-delay: 0.2s; }
-
 
 /* ============================================================
    FUTURISTIC ENHANCEMENTS
@@ -2299,33 +2279,6 @@ main { padding-top: 64px; }
   filter: drop-shadow(0 0 6px var(--color-accent2));
 }
 
-/* Team cards � neon edge on hover */
-.team-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.team-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, transparent 40%, var(--color-accent2) 50%, transparent 60%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.team-card:hover::before { opacity: 1; }
-
-.team-card:hover {
-  box-shadow: var(--shadow-lg), 0 0 50px rgba(0, 145, 218, 0.2);
-}
-
 /* Tech-style sidebar dl */
 .sidebar-dl dt {
   font-family: var(--font-mono);
@@ -2428,20 +2381,6 @@ html { color-scheme: light dark; }
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) { animation: none !important; }
-}
-
-/* Interactive elements share a consistent, springy lift + shadow. */
-.module-card,
-.deliverable-item,
-.team-card,
-.sidebar-card {
-  will-change: transform;
-}
-
-.module-card:hover,
-.team-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
 }
 
 .module-card:active,

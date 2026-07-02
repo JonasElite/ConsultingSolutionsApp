@@ -7,33 +7,39 @@ import body from '../fragments/home.html?raw';
 </BaseLayout>
 
 <script>
-  import { gsap, splitWords, revealText, magnetic, revealOnScroll, parallax, connectLenis, refreshTriggers, reducedMotion } from '../scripts/motion';
   import { getLenis } from '../scripts/smoothscroll';
   import { initNeural } from '../scripts/neural';
 
-  let lenisConnected = false;
+  type Motion = typeof import('../scripts/motion');
 
-  function initHero() {
+  const coarse = matchMedia('(hover: none)').matches;
+
+  function bootNeural(): void {
+    const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-neural]');
+    if (canvas && !canvas.dataset.boot) {
+      canvas.dataset.boot = '1';
+      initNeural(canvas); // zeichnet auf Touch-Geräten nur ein statisches Standbild
+    }
+  }
+
+  function initHero(m: Motion): void {
     const hero = document.querySelector<HTMLElement>('.hero');
     if (!hero || hero.dataset.anim) return;
     hero.dataset.anim = '1';
 
-    const canvas = hero.querySelector<HTMLCanvasElement>('canvas[data-neural]');
-    if (canvas) initNeural(canvas);
-
     const line = hero.querySelector<HTMLElement>('.hero-line[data-split]');
-    const words = line ? splitWords(line) : [];
+    const words = line ? m.splitWords(line) : [];
     const rest = Array.from(
       hero.querySelectorAll<HTMLElement>('[data-hero-in]'),
     );
-    magnetic(hero);
+    m.magnetic(hero);
 
-    if (reducedMotion) {
-      gsap.set([...words, ...rest], { opacity: 1, y: 0 });
+    if (m.reducedMotion) {
+      m.gsap.set([...words, ...rest], { opacity: 1, y: 0 });
       return;
     }
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
+    const tl = m.gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.7 } });
     tl.to(hero.querySelector('.hero-badge'), { autoAlpha: 1, y: 0 })
       .to(words, { autoAlpha: 1, y: 0, stagger: 0.05 }, '-=0.4')
       .to(hero.querySelector('.hero-title-accent'), { autoAlpha: 1, y: 0 }, '-=0.5')
@@ -42,7 +48,7 @@ import body from '../fragments/home.html?raw';
       .to(hero.querySelector('.hero-stats'), { autoAlpha: 1, y: 0 }, '-=0.5');
   }
 
-  function initJourney() {
+  function initJourney(m: Motion): void {
     const section = document.querySelector<HTMLElement>('.journey');
     const track = section?.querySelector<HTMLElement>('.journey-track');
     if (!section || !track || section.dataset.anim) return;
@@ -52,12 +58,12 @@ import body from '../fragments/home.html?raw';
     const steps = Array.from(track.querySelectorAll<HTMLElement>('.journey-step'));
 
     // Steps are visible via CSS when motion isn't ready (reduced-motion).
-    if (reducedMotion) return;
+    if (m.reducedMotion) return;
 
     // Reserve steps so the page-wide reveal skips them (timeline drives them).
     steps.forEach((s) => (s.dataset.mDone = '1'));
 
-    gsap
+    m.gsap
       .timeline({ scrollTrigger: { trigger: track, start: 'top 78%', once: true } })
       .to(line, { scaleX: 1, duration: 0.6, ease: 'power2.out' })
       .to(
@@ -67,10 +73,10 @@ import body from '../fragments/home.html?raw';
       );
   }
 
-  function initNetwork() {
+  function initNetwork(m: Motion): void {
     const svg = document.querySelector<SVGSVGElement>('.network-svg');
     if (!svg || svg.dataset.anim) return;
-    if (reducedMotion) return; // drawn statically as authored
+    if (m.reducedMotion) return; // drawn statically as authored
     // Skip when the SVG isn't rendered (e.g. hidden on mobile) — getTotalLength
     // throws on non-rendered elements.
     if (!svg.getBoundingClientRect().width) return;
@@ -83,30 +89,46 @@ import body from '../fragments/home.html?raw';
     // Prepare each connector for a stroke "draw".
     lines.forEach((l) => {
       const len = l.getTotalLength();
-      gsap.set(l, { strokeDasharray: len, strokeDashoffset: len });
+      m.gsap.set(l, { strokeDasharray: len, strokeDashoffset: len });
     });
 
-    gsap
+    m.gsap
       .timeline({ scrollTrigger: { trigger: svg, start: 'top 80%', once: true } })
       .from(circles, { scale: 0, transformOrigin: 'center', duration: 0.5, ease: 'back.out(2)', stagger: 0.03 })
       .to(lines, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out', stagger: 0.02 }, '-=0.25')
       .from(texts, { autoAlpha: 0, y: 4, duration: 0.4, stagger: 0.04 }, '-=0.4');
   }
 
-  function initHome() {
-    if (!lenisConnected) {
-      connectLenis(getLenis()); // forward Lenis scroll to ScrollTrigger (once)
-      lenisConnected = true;
-    }
-    initHero();
-    initJourney(); // reserves journey steps before the page-wide reveal runs
-    document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => revealText(el));
-    revealOnScroll(document); // section headers, lists etc. (skips reserved elements)
-    magnetic(document); // magnetic buttons beyond the hero
-    parallax(document); // bundle-banner glow depth
-    initNetwork();
-    refreshTriggers(); // recalc after the DOM is in place (also after view swaps)
-  }
+  if (coarse) {
+    // Mobile/Touch: aufwendige Animationen bewusst deaktiviert (harte Regel) —
+    // die GSAP-Engine (~45 KB gz) wird gar nicht erst geladen; Inhalte sind
+    // sofort sichtbar (motion-ready wird im Head nur für Hover-Geräte gesetzt).
+    document.addEventListener('astro:page-load', bootNeural);
+  } else {
+    // Desktop: volle Motion-Erfahrung; die Engine bleibt code-gesplittet und
+    // blockiert das initiale Rendern nicht.
+    const motionModule = import('../scripts/motion');
+    let lenisConnected = false;
 
-  document.addEventListener('astro:page-load', initHome);
+    const initHome = async (): Promise<void> => {
+      const m = await motionModule;
+      if (!lenisConnected) {
+        m.connectLenis(getLenis()); // forward Lenis scroll to ScrollTrigger (once)
+        lenisConnected = true;
+      }
+      bootNeural();
+      initHero(m);
+      initJourney(m); // reserves journey steps before the page-wide reveal runs
+      document.querySelectorAll<HTMLElement>('[data-reveal-text]').forEach((el) => m.revealText(el));
+      m.revealOnScroll(document); // section headers, lists etc. (skips reserved elements)
+      m.magnetic(document); // magnetic buttons beyond the hero
+      m.parallax(document); // bundle-banner glow depth
+      initNetwork(m);
+      m.refreshTriggers(); // recalc after the DOM is in place (also after view swaps)
+    };
+
+    document.addEventListener('astro:page-load', () => {
+      void initHome();
+    });
+  }
 </script>
