@@ -9,26 +9,28 @@
     <div class="container contact-content">
       <div class="contact-grid">
         <div class="contact-form-wrap" data-reveal="up">
-          <!-- Really submits: set data-endpoint to a Formspree/Web3Forms URL to
-               collect messages server-side; without it, a pre-filled e-mail opens. -->
+          <!-- ⚠️ PLATZHALTER: jonas.beckmann@beratung.de ist keine echte Adresse.
+               Formular-Backend anbinden: data-endpoint="https://formspree.io/f/XXXX"
+               (oder Web3Forms) am <form> setzen — ui.ts postet dann per fetch dorthin;
+               ohne Endpoint öffnet ein vorausgefülltes mailto als Fallback. -->
           <form class="contact-form" data-mailto="jonas.beckmann@beratung.de">
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">Vorname *</label>
-                <input type="text" id="fname" name="fname" placeholder="Max" required />
+                <input type="text" id="fname" name="fname" placeholder="Max" autocomplete="given-name" required />
               </div>
               <div class="form-group">
                 <label for="lname">Nachname *</label>
-                <input type="text" id="lname" name="lname" placeholder="Mustermann" required />
+                <input type="text" id="lname" name="lname" placeholder="Mustermann" autocomplete="family-name" required />
               </div>
             </div>
             <div class="form-group">
               <label for="company">Unternehmen *</label>
-              <input type="text" id="company" name="company" placeholder="Muster GmbH" required />
+              <input type="text" id="company" name="company" placeholder="Muster GmbH" autocomplete="organization" required />
             </div>
             <div class="form-group">
               <label for="email">E-Mail *</label>
-              <input type="email" id="email" name="email" placeholder="max@muster.de" required />
+              <input type="email" id="email" name="email" placeholder="max@muster.de" autocomplete="email" required />
             </div>
             <div class="form-group">
               <label for="module">Interessiertes Modul</label>
@@ -43,7 +45,7 @@
             </div>
             <div class="form-group">
               <label for="message">Ihre Nachricht</label>
-              <textarea id="message" name="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI..."></textarea>
+              <textarea id="message" name="message" rows="4" placeholder="Beschreiben Sie kurz Ihren aktuellen Stand und Ihre Ziele rund um KI …"></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full btn-lg" data-magnetic="0.2">Nachricht senden</button>
             <p class="form-note">Wir behandeln Ihre Angaben vertraulich und melden uns innerhalb von 24 Stunden.</p>
@@ -56,6 +58,8 @@
           </div>
         </div>
         <div class="contact-info" data-reveal="up">
+          <!-- ⚠️ PLATZHALTER: *@beratung.de-Adressen und „Nordrhein-Westfalen"
+               sind Beispieldaten — vor Go-Live durch echte Kontaktdaten ersetzen. -->
           <div class="contact-person">
             <div class="contact-avatar">JB</div>
             <div>

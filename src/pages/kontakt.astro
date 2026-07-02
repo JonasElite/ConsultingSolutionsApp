@@ -1,12 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import body from '../fragments/kontakt.html?raw';
+
+/* Die Initialen-Avatare im Roh-Fragment werden zur Build-Zeit durch
+   optimierte Foto-Avatare ersetzt (astro:assets/getImage). Fehlt ein
+   Bild unter src/assets/team/, bleibt der Initialen-Avatar stehen. */
+const teamImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/team/*.{png,jpg,jpeg,webp}',
+  { eager: true },
+);
+const photoOf = (stem: string): ImageMetadata | undefined =>
+  Object.entries(teamImages).find(([path]) => path.includes(`/${stem}.`))?.[1]?.default;
+
+async function avatarTag(stem: string, alt: string, extraClass = ''): Promise<string | null> {
+  const src = photoOf(stem);
+  if (!src) return null;
+  // 96 px breit angefordert (2x für die 48-px-Darstellung); der quadratische
+  // Zuschnitt passiert per CSS object-fit, daher keine Verzerrung.
+  const img = await getImage({ src, width: 96, format: 'webp' });
+  return `<img class="contact-avatar${extraClass}" src="${img.src}" alt="${alt}" width="48" height="48" loading="lazy" decoding="async" />`;
+}
+
+let html = body;
+const jonasAvatar = await avatarTag('jonas', 'Porträtfoto von Jonas Beckmann');
+const emmaAvatar = await avatarTag('emma', 'Porträtfoto von Emma Wissmann', ' contact-avatar-2');
+if (jonasAvatar) html = html.replace('<div class="contact-avatar">JB</div>', jonasAvatar);
+if (emmaAvatar) html = html.replace('<div class="contact-avatar contact-avatar-2">EW</div>', emmaAvatar);
 ---
 <BaseLayout
   title="Kontakt | KI-Beratung"
-  description="Vereinbaren Sie ein unverbindliches Erstgespräch. Wir melden uns innerhalb von 24 Stunden."
+  description="Vereinbaren Sie ein unverbindliches Erstgespräch zu Ihrer KI-Transformation. Wir melden uns innerhalb von 24 Stunden."
 >
-  <main set:html={body}></main>
+  <main set:html={html}></main>
 </BaseLayout>
 
 <script>

@@ -10,6 +10,9 @@
 [data-theme='light'] {
   --cyan: #0aa2c9;
   --cyan-bright: #06b6d4;
+  /* Für TEXT auf hellen Flächen: abgedunkeltes Cyan mit ≥ 4,5:1 (WCAG AA).
+     --cyan selbst bleibt für Glows/Borders/Verläufe erhalten. */
+  --cyan-text: #077395;
   --violet: #6d5efc;
 
   /* Frosted glass surfaces */
@@ -28,6 +31,7 @@
 [data-theme='dark'] {
   --cyan: #38e0ff;
   --cyan-bright: #5cf0ff;
+  --cyan-text: #38e0ff; /* auf dunklen Flächen ist das helle Cyan AA-konform */
   --violet: #8b7bff;
 
   --glass-bg: rgba(18, 27, 56, 0.55);
@@ -99,9 +103,46 @@ body {
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-bottom: 1px solid var(--glass-border);
+  transition: border-color var(--transition);
 }
+.nav.scrolled { border-bottom-color: rgba(255, 255, 255, 0.16); }
+[data-theme='light'] .nav.scrolled { border-bottom-color: rgba(0, 24, 77, 0.16); }
 [data-theme='light'] .nav {
   background: rgba(255, 255, 255, 0.72);
+}
+/* Auf hellem Glas brauchen alle Nav-Elemente dunkle Farben — die Basis-
+   Styles (global.css) sind für die dunkle Leiste ausgelegt und wären
+   hier weiß auf weiß (unsichtbar). */
+[data-theme='light'] .nav-link {
+  color: var(--color-text-muted);
+}
+[data-theme='light'] .nav-link:hover {
+  color: var(--color-text);
+  background: rgba(0, 51, 141, 0.07);
+}
+[data-theme='light'] .nav-link.active {
+  color: var(--color-primary);
+  background: rgba(0, 145, 218, 0.12);
+  box-shadow: inset 0 -2px 0 var(--color-primary);
+}
+[data-theme='light'] .nav-brand,
+[data-theme='light'] .nav-brand-accent {
+  color: var(--color-text);
+}
+[data-theme='light'] .nav-brand-accent {
+  border-left-color: rgba(0, 24, 77, 0.3);
+}
+[data-theme='light'] .theme-toggle {
+  color: var(--color-text-muted);
+}
+[data-theme='light'] .theme-toggle:hover {
+  color: var(--color-primary);
+  background: rgba(0, 145, 218, 0.1);
+}
+[data-theme='light'] .nav-hamburger { color: var(--color-text); }
+[data-theme='light'] .nav-hamburger span { background: var(--color-text); }
+[data-theme='light'] .nav-mobile {
+  border-top-color: rgba(0, 24, 77, 0.1);
 }
 .nav-cta {
   background: linear-gradient(135deg, var(--color-primary), var(--cyan-bright)) !important;
@@ -118,10 +159,17 @@ body {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  color: var(--cyan);
+  color: var(--cyan-text);
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
+}
+/* Auf den dunklen Hero-Flächen bleibt das helle Cyan (Kontrast zur Navy). */
+.hero .section-eyebrow,
+.page-hero .section-eyebrow,
+.module-hero .section-eyebrow,
+.module-hero .module-eyebrow {
+  color: var(--cyan-bright);
 }
 .section-eyebrow::before {
   content: '';
@@ -183,6 +231,9 @@ body {
   background: var(--hairline);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  /* Unprefixte mask-Eigenschaften für Firefox — ohne sie läge der
+     Hairline-Verlauf dort ungeschnitten über der ganzen Karte. */
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   opacity: 0.9;
   pointer-events: none;
@@ -219,7 +270,7 @@ body {
 /* Make the "Mehr erfahren" affordance unmistakable. */
 .module-card-cta {
   margin-top: auto;
-  color: var(--cyan);
+  color: var(--cyan-text);
   font-weight: 600;
   gap: 0.5em;
   opacity: 1;            /* always visible — was hover-only (poor touch affordance) */
@@ -334,7 +385,7 @@ body {
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--cyan);
+  color: var(--cyan-text);
 }
 .journey-label {
   font-family: var(--font-display);
@@ -356,7 +407,7 @@ body {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.74); /* WCAG AA auf Navy */
   margin-bottom: var(--space-4);
 }
 .crumbs [data-link] { color: rgba(255, 255, 255, 0.85); }
@@ -413,7 +464,7 @@ body {
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--cyan);
+  color: var(--cyan-text);
 }
 .module-pager .pager-title { font-family: var(--font-display); font-weight: 600; color: var(--color-text); }
 .module-pager .pager-next { text-align: right; align-items: flex-end; margin-left: auto; }
@@ -471,6 +522,12 @@ body {
 .team-together,
 .cta-box {
   border: 1px solid var(--glass-border);
+}
+
+/* Team-Rollenzeile: helles Akzentblau erreicht auf Weiß kein AA → im
+   Light-Mode auf das AA-sichere Cyan-Text-Token ausweichen. */
+[data-theme='light'] .team-role {
+  color: var(--cyan-text);
 }
 
 /* ---------- Contact form: clearer, glassy fields ---------- */
